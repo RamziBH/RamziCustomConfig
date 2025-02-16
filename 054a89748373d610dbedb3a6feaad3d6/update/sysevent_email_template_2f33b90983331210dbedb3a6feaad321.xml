@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sysevent_email_template">
+    <sysevent_email_template action="INSERT_OR_UPDATE">
+        <collection>incident</collection>
+        <email_layout/>
+        <message/>
+        <message_html><![CDATA[<table class="MsoTableGrid" style="border-collapse: collapse; border: none; width: 101.81%; height: 35.925px;" border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr style="height: 35.925px;">
+<td style="width: 55.3911%; padding: 0cm 5.4pt; height: 35.925px;" valign="top">
+<table class="MsoTableGrid" style="width: 721px; border-collapse: collapse; border: none;" border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr style="height: 42.05pt;">
+<td style="width: 171.375px; padding: 0cm 5.4pt;" valign="top">
+<p style="margin: 0cm 0cm 3pt; text-align: left; line-height: 10pt; font-size: 12pt; font-family: 'Times New Roman', serif;"><img src="/sys_attachment.do?sys_id=8e2867e01bbf0e5006256465624bcb10" width="89" height="32"></p>
+</td>
+<td style="width: 310.688px; padding: 0cm 5.4pt;">
+<p style="margin: 0cm 0cm 3pt; text-align: center; line-height: 16pt; font-size: 12pt; font-family: 'Times New Roman', serif;"><strong><span style="font-size: 14pt; font-family: Arial, sans-serif;">Charte de projet <br></span></strong><span style="font-family: Calibri, sans-serif; color: black;">Projet</span></p>
+<p style="margin: 0cm 0cm 3pt; line-height: 10pt; text-align: justify; font-size: 12pt; font-family: 'Times New Roman', serif;"><strong><span style="font-size: 10pt;">&nbsp;</span></strong></p>
+</td>
+<td style="width: 142.319px; padding: 0cm 5.4pt;" valign="top">
+<p style="margin: 0cm 0cm 3pt; line-height: 10pt; font-size: 12pt; font-family: 'Times New Roman', serif; text-align: left;"><span style="font-size: 10pt;"><strong>BUREAU DE PROJETS INTERNES</strong></span></p>
+</td>
+<td style="width: 35.0187px; padding: 0cm 5.4pt;" valign="top">
+<p style="margin: 0cm 0cm 3pt; text-align: right; line-height: 10pt; font-size: 12pt; font-family: 'Times New Roman', serif;"><img src="/sys_attachment.do?sys_id=be386be01bbf0e5006256465624bcb06" width="34" height="35"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td style="width: 41.8472%; padding: 0cm 5.4pt; height: 35.925px;">&nbsp;</td>
+<td style="width: 2.73141%; padding: 0cm 5.4pt; height: 35.925px;">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table class="MsoNormalTable" style="width: 725px; margin-left: 0.85pt; border-collapse: collapse; border: none; height: 1269.63px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr style="break-inside: avoid; height: 26.6625px;">
+<td style="width: 395.362px; border-width: 2.25pt 2.25pt 1pt; border-style: solid; border-color: windowtext; border-image: initial; background: rgb(184, 204, 228); padding: 0.7pt 3.5pt; height: 26.6625px;" colspan="3" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><span style="font-family: Calibri, sans-serif; color: black;">Date et heure d'ex&eacute;cution du PDF: </span></p>
+</td>
+<td style="width: 294.462px; border-top: 2.25pt solid windowtext; border-left: none; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; padding: 0.7pt 3.5pt; height: 26.6625px;" colspan="2" valign="top">
+<p style="margin: 3pt 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><span style="font-family: Calibri, sans-serif;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">dateheure</span> Eastern Daylight Time</span></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 26.6625px;">
+<td style="width: 395.362px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; background: rgb(184, 204, 228); padding: 0.7pt 3.5pt; height: 26.6625px;" colspan="3" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><span style="font-family: Calibri, sans-serif; color: black;">Ex&eacute;cut&eacute; par:</span></p>
+</td>
+<td style="width: 294.462px; border-top: none; border-left: none; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; padding: 0.7pt 3.5pt; height: 26.6625px;" colspan="2" valign="top">
+<p style="margin: 3pt 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">creepar</span></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 26.6625px;">
+<td style="width: 689.825px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; background: rgb(31, 73, 125); padding: 0.7pt 3.5pt; height: 26.6625px;" colspan="5" valign="top">
+<p style="margin: 3pt 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><span style="font-family: Calibri, sans-serif; color: white;">Identification</span></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 18.6625px;">
+<td style="width: 131.75px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 1pt solid windowtext; background: rgb(198, 217, 241); padding: 0.7pt 3.5pt; height: 18.6625px;" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><span style="font-family: Calibri, sans-serif; color: black;">Num&eacute;ro</span></p>
+</td>
+<td style="width: 558.075px; border-top: none; border-left: none; border-bottom: 1pt solid windowtext; border-right: 1pt solid windowtext; padding: 0.7pt 3.5pt; height: 18.6625px;" colspan="4" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif;"><span style="font-family: Calibri, sans-serif;">&nbsp;Projet</span></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 18.6625px;">
+<td style="width: 131.75px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 1pt solid windowtext; background: rgb(198, 217, 241); padding: 0.7pt 3.5pt; height: 18.6625px;" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><span style="font-family: Calibri, sans-serif; color: black;">Nom du projet</span></p>
+</td>
+<td style="width: 558.075px; border-top: none; border-left: none; border-bottom: 1pt solid windowtext; border-right: 1pt solid windowtext; padding: 0.7pt 3.5pt; height: 18.6625px;" colspan="4" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif;"><span style="font-family: Calibri, sans-serif;">&nbsp;nom du projet</span></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 37.325px;">
+<td style="width: 131.75px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 1pt solid windowtext; background: rgb(198, 217, 241); padding: 0.7pt 3.5pt; height: 37.325px;" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><span style="font-family: Calibri, sans-serif; color: black;">Gestionnaire du projet</span></p>
+</td>
+<td style="width: 201.125px; border-top: none; border-left: none; border-bottom: 1pt solid windowtext; border-right: 1pt solid windowtext; padding: 0.7pt 3.5pt; height: 37.325px;" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif;"><span style="font-family: Calibri, sans-serif;">&nbsp;Gestionnaire du projet est vide</span></p>
+</td>
+<td style="width: 145.95px; border-top: none; border-left: none; border-bottom: 1pt solid windowtext; border-right: 1pt solid windowtext; background: rgb(198, 217, 241); padding: 0.7pt 3.5pt; height: 37.325px;" colspan="2" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif;"><strong><span style="font-family: Calibri, sans-serif; color: black;">Date de d&eacute;but r&eacute;elle: </span></strong></p>
+</td>
+<td style="width: 211px; border-top: none; border-left: none; border-bottom: 1pt solid windowtext; border-right: 1pt solid windowtext; padding: 0.7pt 3.5pt; height: 37.325px;" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif;">date de debut reelle</p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 23.625px;">
+<td style="width: 131.75px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 1pt solid windowtext; background: rgb(198, 217, 241); padding: 0.7pt 3.5pt; height: 23.625px;" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><span style="font-family: Calibri, sans-serif; color: black;">Portefeuille:</span></p>
+</td>
+<td style="width: 201.125px; border-top: none; border-left: none; border-bottom: 1pt solid windowtext; border-right: 1pt solid windowtext; padding: 0.7pt 3.5pt; height: 23.625px;" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif;"><span style="font-family: Calibri, sans-serif;">&nbsp;Portefeuille est vide</span></p>
+</td>
+<td style="width: 145.95px; border-top: none; border-left: none; border-bottom: 1pt solid windowtext; border-right: 1pt solid windowtext; background: rgb(198, 217, 241); padding: 0.7pt 3.5pt; height: 23.625px;" colspan="2" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif;"><strong><span style="font-family: Calibri, sans-serif; color: black;">Programme:</span></strong></p>
+</td>
+<td style="width: 211px; border-top: none; border-left: none; border-bottom: 1pt solid windowtext; border-right: 1pt solid windowtext; padding: 0.7pt 3.5pt; height: 23.625px;" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif;"><span style="font-family: Calibri, sans-serif; color: black;">&nbsp;Programme est vide</span></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 28.6625px;">
+<td style="width: 131.75px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 1pt solid windowtext; background: rgb(198, 217, 241); padding: 0.7pt 3.5pt; height: 28.6625px;" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><span style="font-family: Calibri, sans-serif; color: black;">Partie prenante&nbsp;:</span></p>
+</td>
+<td style="width: 558.075px; border-top: none; border-left: none; border-bottom: 1pt solid windowtext; border-right: 1pt solid windowtext; padding: 0.7pt 3.5pt; height: 28.6625px;" colspan="4" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif;"><span style="font-family: Calibri, sans-serif;">Partie prenante est vide</span></p>
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif;">&nbsp;</p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 26.6625px;">
+<td style="width: 689.825px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; background: rgb(31, 73, 125); padding: 0.7pt 3.5pt; height: 26.6625px;" colspan="5" valign="top">
+<p style="margin: 3pt 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><span style="font-family: Calibri, sans-serif; color: white;">Charte de projet</span></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 18.6625px;">
+<td style="width: 689.825px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; background: rgb(198, 217, 241); padding: 0.7pt 3.5pt; height: 18.6625px;" colspan="5" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><span style="font-family: Calibri, sans-serif; color: black;">Mise en contexte</span></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 18.6625px;">
+<td style="width: 689.825px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; padding: 0.7pt 3.5pt; height: 18.6625px;" colspan="5" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><em><span style="font-family: Calibri, sans-serif; font-weight: normal;">Cette section explique le &laquo;&nbsp;pourquoi&nbsp;&raquo; du projet.</span></em></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 55.7313px;">
+<td style="width: 689.825px; border-right: 2.25pt solid windowtext; border-bottom: 2.25pt solid windowtext; border-left: 2.25pt solid windowtext; border-image: initial; border-top: none; padding: 0.7pt 3.5pt; height: 55.7313px;" colspan="5" valign="top">
+<p><span style="font-family: 'times new roman', times; font-size: 10pt;">Mise en contexte du projet est vide</span></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 18.6625px;">
+<td style="width: 689.825px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; background: rgb(198, 217, 241); padding: 0.7pt 3.5pt; height: 18.6625px;" colspan="5">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><span style="font-family: Calibri, sans-serif; color: black;">Objectifs du projet</span></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 18.6625px;">
+<td style="width: 689.825px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; padding: 0.7pt 3.5pt; height: 18.6625px;" colspan="5" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><em><span style="font-family: Calibri, sans-serif; font-weight: normal;">Cette section d&eacute;crit les objectifs mesurables qui pourront &ecirc;tre v&eacute;rifi&eacute;s &agrave; la fin du projet.</span></em></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 58.375px;">
+<td style="width: 689.825px; border-right: 2.25pt solid windowtext; border-bottom: 2.25pt solid windowtext; border-left: 2.25pt solid windowtext; border-image: initial; border-top: none; padding: 0.7pt 3.5pt; height: 58.375px;" colspan="5" valign="top">
+<div>
+<p><span style="font-family: 'times new roman', times; font-size: 10pt;">Objectifs du projet est vide</span></p>
+</div>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 18.6625px;">
+<td style="width: 689.825px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; background: rgb(198, 217, 241); padding: 0.7pt 3.5pt; height: 18.6625px;" colspan="5">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><span style="font-family: Calibri, sans-serif; color: black;">R&eacute;sum&eacute; des b&eacute;n&eacute;fices</span></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 18.6625px;">
+<td style="width: 689.825px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; background: white; padding: 0.7pt 3.5pt; height: 18.6625px;" colspan="5">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><em><span style="font-family: Calibri, sans-serif; color: black; font-weight: normal;">Cette section d&eacute;finit les b&eacute;n&eacute;fices attendus par le projet qui auront de la valeur ajout&eacute;e</span></em></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 41.4625px;">
+<td style="width: 689.825px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; padding: 0.7pt 3.5pt; height: 41.4625px;" colspan="5" valign="top">
+<p><span style="font-family: 'times new roman', times; font-size: 10pt;">Resume des benefices est vide</span></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 18.6625px;">
+<td style="width: 689.825px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; background: rgb(198, 217, 241); padding: 0.7pt 3.5pt; height: 18.6625px;" colspan="5" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><span style="font-family: Calibri, sans-serif; color: black;">Facteurs critiques de succ&egrave;s</span></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 37.325px;">
+<td style="width: 689.825px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; background: white; padding: 0.7pt 3.5pt; height: 37.325px;" colspan="5" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><em><span style="font-family: Calibri, sans-serif; color: black; font-weight: normal;">Cette section d&eacute;finit les facteurs qui doivent &ecirc;tre mis en place pour assurer le succ&egrave;s du projet (Inclus les indicateurs KPI en plus des crit&egrave;res qualitatifs de succ&egrave;s)</span></em></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 41.4625px;">
+<td style="width: 689.825px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; padding: 0.7pt 3.5pt; height: 41.4625px;" colspan="5" valign="top">
+<p><span style="font-family: 'times new roman', times; font-size: 10pt;">Facteurs critiques de succes est vide</span></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 18.6625px;">
+<td style="width: 689.825px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; background: rgb(198, 217, 241); padding: 0.7pt 3.5pt; height: 18.6625px;" colspan="5">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><span style="font-family: Calibri, sans-serif; color: black;">Approche de livraison</span></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 18.6625px;">
+<td style="width: 689.825px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; background: white; padding: 0.7pt 3.5pt; height: 18.6625px;" colspan="5">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><em><span style="font-family: Calibri, sans-serif; color: black; font-weight: normal;">Cette section d&eacute;crit le &laquo; comment &raquo;, soit la fa&ccedil;on de s&rsquo;y prendre pour r&eacute;aliser le projet</span></em></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 70.7937px;">
+<td style="width: 689.825px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; padding: 0.7pt 3.5pt; height: 70.7937px;" colspan="5" valign="top">
+<p><span style="font-family: 'times new roman', times; font-size: 10pt;">Approche de livraison est vide</span></p>
+<p style="margin: 6pt 0cm; text-align: justify; line-height: 16pt; font-size: 12pt; font-family: 'Times New Roman', serif;">&nbsp;</p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 18.6625px;">
+<td style="width: 689.825px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; background: rgb(198, 217, 241); padding: 0.7pt 3.5pt; height: 18.6625px;" colspan="5" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><span style="font-family: Calibri, sans-serif; color: black;">Grand livrables&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 18.6625px;">
+<td style="width: 689.825px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; background: white; padding: 0.7pt 3.5pt; height: 18.6625px;" colspan="5" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><em><span style="font-family: Calibri, sans-serif; color: black; font-weight: normal;">Cette section est d&eacute;di&eacute;e aux grands livrables d'un projet</span></em></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 41.4625px;">
+<td style="width: 689.825px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; padding: 0.7pt 3.5pt; height: 41.4625px;" colspan="5" valign="top">
+<p><span style="font-family: 'times new roman', times; font-size: 10pt;">Grand livrables est vide</span></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 32.8563px;">
+<td style="width: 689.825px; border-right: 2.25pt solid windowtext; border-bottom: 2.25pt solid windowtext; border-left: 2.25pt solid windowtext; border-image: initial; border-top: none; background: rgb(198, 217, 241); padding: 0.7pt 3.5pt; height: 32.8563px;" colspan="5" valign="top">
+<p style="margin: 0cm; text-align: justify; line-height: 16pt; font-size: 12pt; font-family: 'Times New Roman', serif;"><strong><span style="font-size: 10pt; font-family: Calibri, sans-serif; color: black;">Inclusion</span></strong></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 32.8563px;">
+<td style="width: 689.825px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; padding: 0.7pt 3.5pt; height: 32.8563px;" colspan="5" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><em><span style="font-family: Calibri, sans-serif; font-weight: normal;">Cette section d&eacute;crit les activit&eacute;s qui sont inclus dans la port&eacute;e du projet</span></em></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 41.4625px;">
+<td style="width: 689.825px; border-right: 2.25pt solid windowtext; border-bottom: 2.25pt solid windowtext; border-left: 2.25pt solid windowtext; border-image: initial; border-top: none; padding: 0.7pt 3.5pt; height: 41.4625px;" colspan="5" valign="top">
+<p><span style="font-family: 'times new roman', times; font-size: 10pt;">inclusions est vide</span></p>
+</td>
+</tr>
+<tr style="height: 32.8563px;">
+<td style="width: 689.825px; border-right: 2.25pt solid windowtext; border-bottom: 2.25pt solid windowtext; border-left: 2.25pt solid windowtext; border-image: initial; border-top: none; background: rgb(198, 217, 241); padding: 0.7pt 3.5pt; height: 32.8563px;" colspan="5" valign="top">
+<p style="margin: 0cm; text-align: justify; line-height: 16pt; font-size: 12pt; font-family: 'Times New Roman', serif;"><strong><span style="font-size: 10pt; font-family: Calibri, sans-serif; color: black;">Exclusion</span></strong></p>
+</td>
+</tr>
+<tr style="height: 32.8563px;">
+<td style="width: 689.825px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; padding: 0.7pt 3.5pt; height: 32.8563px;" colspan="5" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><em><span style="font-family: Calibri, sans-serif; font-weight: normal;">Cette section d&eacute;crit les activit&eacute;s qui ne sont pas incluses dans la port&eacute;e du projet</span></em></p>
+</td>
+</tr>
+<tr style="height: 41.4625px;">
+<td style="border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; padding: 0.7pt 3.5pt; width: 689.825px; height: 41.4625px;" colspan="5">
+<p><span style="font-family: 'times new roman', times; font-size: 10pt;">exclusions est vide</span></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 18.6625px;">
+<td style="width: 689.825px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; background: rgb(198, 217, 241); padding: 0.7pt 3.5pt; height: 18.6625px;" colspan="5" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><span style="font-family: Calibri, sans-serif; color: black;">Contraintes </span></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 37.325px;">
+<td style="width: 689.825px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; padding: 0.7pt 3.5pt; height: 37.325px;" colspan="5" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><em><span style="font-family: Calibri, sans-serif; font-weight: normal;">Cette section d&eacute;crit les diff&eacute;rents facteurs qui peuvent affecter le projet en termes de d&eacute;lais, d&rsquo;atteinte des crit&egrave;res de qualit&eacute; ou autre (continuit&eacute; des op&eacute;rations, technologie, politique, &hellip;)</span></em></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 56.375px;">
+<td style="width: 689.825px; border-right: 2.25pt solid windowtext; border-bottom: 2.25pt solid windowtext; border-left: 2.25pt solid windowtext; border-image: initial; border-top: none; padding: 0.7pt 3.5pt; height: 56.375px;" colspan="5" valign="top">
+<p><span style="font-family: 'times new roman', times; font-size: 10pt;">containtes est vide</span></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 18.6625px;">
+<td style="width: 689.825px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; background: rgb(198, 217, 241); padding: 0.7pt 3.5pt; height: 18.6625px;" colspan="5" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><span style="font-family: Calibri, sans-serif; color: black;">Risques</span></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 27.325px;">
+<td style="width: 689.825px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; background: white; padding: 0.7pt 3.5pt; height: 27.325px;" colspan="5" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><em><span style="font-family: Calibri, sans-serif; color: black; font-weight: normal;">Cette section d&eacute;crit les risques &agrave; haut niveau, sans d&eacute;crire de moyens de mitigation.</span></em></p>
+</td>
+</tr>
+<tr style="height: 18.6625px;">
+<td style="border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; background: white; padding: 0.7pt 3.5pt; width: 689.825px; height: 18.6625px;" colspan="5">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><span style="font-family: 'times new roman', times;"><span style="color: black; font-weight: normal;">risques est vide</span></span></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 18.6625px;">
+<td style="width: 689.825px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; background: rgb(198, 217, 241); padding: 0.7pt 3.5pt; height: 18.6625px;" colspan="5" valign="top">
+<p style="margin: 0cm; font-size: 10pt; font-family: 'Times New Roman', serif; font-weight: bold;"><span style="font-family: Calibri, sans-serif; color: black;">Hypoth&egrave;ses</span></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 22.325px;">
+<td style="width: 689.825px; border-top: none; border-left: 2.25pt solid windowtext; border-bottom: 1pt solid windowtext; border-right: 2.25pt solid windowtext; padding: 0.7pt 3.5pt; height: 22.325px;" colspan="5" valign="top">
+<p style="margin: 0cm; text-align: justify; line-height: 16pt; font-size: 12pt; font-family: 'Times New Roman', serif;"><em><span style="font-size: 10pt; font-family: Calibri, sans-serif;">Cette section d&eacute;taille les hypoth&egrave;ses du projet qui pourront &ecirc;tre confirmer ou infirmer ult&eacute;rieurement. </span></em></p>
+</td>
+</tr>
+<tr style="break-inside: avoid; height: 51.7938px;">
+<td style="width: 689.825px; border-right: 2.25pt solid windowtext; border-bottom: 2.25pt solid windowtext; border-left: 2.25pt solid windowtext; border-image: initial; border-top: none; padding: 0.7pt 3.5pt; height: 51.7938px;" colspan="5" valign="top">
+<p><span style="font-family: 'times new roman', times; font-size: 10pt;">Hypotheses est vide<span id="mce_37"></span></span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p style="margin: 0cm 0cm 3pt; text-align: right; line-height: 10pt; font-size: 12pt; font-family: 'Times New Roman', serif;">&nbsp;</p>]]></message_html>
+        <message_list/>
+        <message_text/>
+        <name>Charte de projet </name>
+        <sms_alternate/>
+        <subject/>
+        <sys_class_name>sysevent_email_template</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-16 21:32:06</sys_created_on>
+        <sys_id>2f33b90983331210dbedb3a6feaad321</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Charte de projet </sys_name>
+        <sys_package display_value="RBH customization" source="x_1610537_rbh_cust">054a89748373d610dbedb3a6feaad3d6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="RBH customization">054a89748373d610dbedb3a6feaad3d6</sys_scope>
+        <sys_update_name>sysevent_email_template_2f33b90983331210dbedb3a6feaad321</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-16 21:32:06</sys_updated_on>
+        <sys_version>2</sys_version>
+    </sysevent_email_template>
+</record_update>
