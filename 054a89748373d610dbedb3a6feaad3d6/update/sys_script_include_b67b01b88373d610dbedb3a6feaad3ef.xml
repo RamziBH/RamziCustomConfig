@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_1610537_rbh_cust.HoCITSMCommonAjaxUtils</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>HoCITSMCommonAjaxUtils</name>
+        <sandbox_callable>true</sandbox_callable>
+        <script><![CDATA[var HoCITSMCommonAjaxUtils = Class.create();
+HoCITSMCommonAjaxUtils.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+
+
+    /* 
+    	- Optimize the loading of the user data. Remove the usage of g_form.getReference('caller_id', callback) since it retreives all the user fields in the database
+    	- Add fields has needed
+    	- this is used in incident form on change of the Requestor & Requested For fields
+    */
+
+    detectLangForUser: function() {
+
+        var inputStr = this.getParameter("sysparm_input");
+        var userId = this.getParameter("sysparm_userid").toString();
+
+        var result = new global.HoCITSMCommonUtils().proceedwithLangForUser(inputStr, userId);
+        return result;
+
+    },
+
+    detectLang: function() {
+
+        var inputStr = this.getParameter("sysparm_input");
+        var result = new global.HoCITSMCommonUtils().detectLang(inputStr);
+
+        return result;
+
+    },
+
+
+
+    getUserInfo: function() {
+        var id = this.getParameter("sysparm_id");
+        var user = new global.HoCITSMCommonUtils().getUserInfo(id);
+        return JSON.stringify(user);
+    },
+
+    getMemberGroups: function() {
+
+        var userSysID = this.getParameter('sysparm_userid');
+        var result = JSON.stringify(new global.HoCITSMCommonUtils().getMemberGroups(userSysID, 'itil'));
+
+        return result;
+    },
+
+
+    getChoicesInfo: function(tablename, tableelement) {
+        var tableName = this.getParameter("sysparm_tablename") || tablename;
+
+        //x_hccc_base.HoCBaseUtils. getTranslatedChoice: function(tableName, tableElement, sourceValue, language)
+        var tableElement = this.getParameter("sysparm_tableelement") || tableelement;
+        var lang = gs.getSession().getLanguage() || "en";
+
+        var arrData = [];
+
+        var gr = new GlideRecord("sys_choice");
+        gr.addQuery('name', tableName);
+        gr.addQuery('element', tableElement);
+        gr.addQuery("language", lang);
+        gr.addQuery("inactive", false);
+        gr.orderBy('sequence');
+        gr.query();
+
+        while (gr.next()) {
+            arrData.push({
+                // sys_id: gr.sys_id.toString(),
+                displayName: gr.label.toString(),
+                itmValue: gr.value.toString()
+
+            });
+        }
+
+        return JSON.stringify(arrData);
+    },
+
+    getFormTimeWorkedToMinutes: function(timeWorkedNow) {
+
+        var vMins = 0;
+        var vHours = 0;
+        var vMins = 0;
+        var vSec = 0;
+
+        if (timeWorkedNow != "") {
+            var newDuration = timeWorkedNow.split(":");
+
+            vHours = Number(newDuration[0]) || 0;
+            vMins = Number(newDuration[1]) || 0;
+            vSec = Number(newDuration[2]) || 0;
+            vMins = vHours * 60 + vMins;
+
+
+        }
+
+        return vMins;
+
+    },
+    getFieldsForModal: function() {
+        var tableName = this.getParameter("sysparm_tablename");
+        var recId = this.getParameter("sysparm_recid");
+        var actionName = this.getParameter("sysparm_actionname");
+        var formData = this.getParameter("sysparm_other");
+        var formDataObj;
+
+        try {
+
+            formDataObj = JSON.parse(formData);
+        } catch (e) {
+            gs.info("global.HoCITSMCommonAjaxUtils script include has an issue in parsing ");
+
+        }
+
+        var sysUserId = gs.getUserID();
+
+        var msgtoUser = gs.getMessage("For complex reporting please go to Related records->Time Worked");
+        var timeWorkedPrev = this.getWorkedTimePrev(tableName, recId).toString();
+
+
+        var closeCode = "";
+        var closeNotes = "";
+        var assignmentGroup = "";
+        var formTime = 0;
+
+        var isItResolve = (actionName == "change_task_to_closed" || actionName == 'sow_close_change_request' || actionName == 'hoc_tw_resolve_incident') ? true : false;
+        var isItAssignToMe = (actionName == 'hoc_tw_assign_to_me') ? true : false;
+
+
+
+        if (formDataObj) {
+            if (isItResolve) {
+                closeCode = this.findById(formDataObj, "name", "close_code");
+
+                closeNotes = this.findById(formDataObj, "name", "close_notes");
+            }
+
+            if (isItAssignToMe) {
+
+                assignmentGroup = this.findById(formDataObj, "name", "assignment_group");
+
+
+            }
+
+
+
+            formTime = this.findById(formDataObj, "name", "time_worked_start");
+            formDataObj = null;
+            formData = null;
+
+        }
+
+
+        formTime = formTime == "" ? 0 : formTime; //(new GlideDuration(formTime).getNumericValue() / 1000 / 60);
+
+        var defaultMins = 0;
+
+        var nowTime = new GlideDateTime().getDisplayValue();
+        var durSec = gs.dateDiff(formTime, nowTime, true);
+
+        if (durSec < 60) defaultMins = 0
+        else defaultMins = Math.round(durSec / 60);
+
+        var defaultFields = [{
+                type: 'string',
+                name: 'prevTimeWorked',
+                label: 'prevTimeWorked',
+                value: timeWorkedPrev,
+                visible: false
+
+            },
+            {
+                type: 'string',
+                name: "msgToUser",
+                label: gs.getMessage("Note:"),
+                value: msgtoUser,
+                readonly: true
+            },
+            {
+                type: 'string',
+                name: 'timeMins',
+                label: gs.getMessage('Minutes'),
+                value: defaultMins.toString(),
+                mandatory: true
+            }
+
+        ];
+
+        if (isItResolve) {
+
+            var answer = JSON.parse(this.getChoicesInfo(tableName, 'close_code'));
+            var choices = [];
+
+            for (var i = 0; i < answer.length; i++) {
+                choices.push({
+                    displayValue: answer[i].displayName,
+                    value: answer[i].itmValue
+                })
+
+            }
+
+            var closeCodeFields = [{
+
+                    type: 'choice',
+                    name: 'close_code',
+                    label: gs.getMessage('Close code'),
+                    choices: choices,
+                    value: closeCode,
+                    mandatory: true
+                },
+                {
+                    type: 'textarea',
+                    name: 'close_notes',
+                    label: gs.getMessage('Close notes'),
+                    value: closeNotes,
+                    mandatory: true
+                }
+            ];
+            var newFields = defaultFields.concat(closeCodeFields);
+            return JSON.stringify(newFields);
+
+        } else if (isItAssignToMe) {
+            //assignmentGroup
+            var getGroups = JSON.parse(new sn_sow_itsm_common.SOWITSMCommonClientUtils().getMemberGroups(sysUserId));
+
+            var choices = [];
+            for (var i = 0; i < getGroups.length; i++) {
+                choices.push({
+                    displayValue: getGroups[i].displayName,
+                    value: getGroups[i].sys_id
+                });
+            }
+
+            var manyGroups = false
+            if (choices.length > 1) manyGroups = true;
+
+            var assignmentFields = [{
+
+                type: 'choice',
+                name: 'assignmentGroup',
+                label: gs.getMessage('Assignment Group'),
+                choices: choices,
+                value: assignmentGroup,
+                mandatory: true,
+                visible: manyGroups
+            }];
+
+
+            var newFields = defaultFields.concat(assignmentFields);
+            return JSON.stringify(newFields);
+
+
+        } else {
+
+
+            return JSON.stringify(defaultFields);
+        }
+
+    },
+
+    getWorkedTimePrev: function(tablename, recid) {
+        var tableName = this.getParameter("sysparm_tablename") || tablename;
+        var recId = this.getParameter("sysparm_recid") || recid;
+
+        var gr = new GlideRecord(tableName);
+        gr.get(recId);
+
+        var timePrev = Math.ceil(this.getTimeWorkedOnTask(gr));
+
+        return timePrev;
+        //new HoCITSMCommonUtils().getTimeWorkedOnTask(gr);
+
+
+    },
+
+    getTimeWorkedOnTask: function(current) {
+        var totalTimeworked = 0;
+        var taskTimeWorkedGa = new GlideAggregate("task_time_worked");
+        taskTimeWorkedGa.addQuery("task", current.sys_id.toString());
+        taskTimeWorkedGa.addAggregate("SUM", "time_worked");
+        taskTimeWorkedGa.groupBy("task");
+        taskTimeWorkedGa.query();
+        if (taskTimeWorkedGa.next()) {
+            totalTimeworked = taskTimeWorkedGa.getAggregate("SUM", "time_worked");
+        }
+
+        return (new GlideDuration(totalTimeworked).getNumericValue() / 1000 / 60);
+
+    },
+
+    findById: function(array, key, value) {
+        var results = "";
+
+        for (var i = 0; i < array.length; i++) {
+            if (array[i][key] === value) {
+                return array[i].value;
+            }
+        }
+
+        return results;
+
+    },
+
+    makeCommentsPrettyCommon: function(strComments) {
+        var result = strComments.length > 0 ? strComments.replace('[code]', '').replace('[/code]', '').replace(/(<([^>]+)>)/ig, '') : "";
+        return result;
+    },
+
+    createExternalUser: function(objDataNew) {
+        var strData = this.getParameter("sysparm_data");
+
+        var objData = JSON.parse(strData) || objDataNew;
+
+        var gr = new GlideRecord("u_external_user");
+        gr.addEncodedQuery("email=" + objData[2].value);
+
+        gr.query();
+
+        if (!gr.next()) {
+            var gr = new GlideRecord("u_external_user");
+            gr.initialize();
+            gr.first_name = objData[0].value;
+            gr.last_name = objData[1].value;
+            gr.email = objData[2].value;
+
+            gr.phone = objData[3].value;
+            gr.department = objData[4].value;
+            gr.location = objData[5].value;
+            gr.preferred_language = objData[6].value != 'en' && objData[6].value != 'fq' ? '' : objData[6].value;
+
+            gr.notification = 1; // PBI 159845: disable notifications for external users in backend by default
+
+            gr.x_hccc_base_user_type = "external";
+            var newId = gr.insert();
+            return newId.toString();
+        } else
+            return gs.getMessage("An External user with an email address of " + objData[2].value + " already exists.");
+    },
+
+    type: 'HoCITSMCommonAjaxUtils'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-16 00:00:16</sys_created_on>
+        <sys_id>b67b01b88373d610dbedb3a6feaad3ef</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>HoCITSMCommonAjaxUtils</sys_name>
+        <sys_package display_value="RBH customization" source="x_1610537_rbh_cust">054a89748373d610dbedb3a6feaad3d6</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="RBH customization">054a89748373d610dbedb3a6feaad3d6</sys_scope>
+        <sys_update_name>sys_script_include_b67b01b88373d610dbedb3a6feaad3ef</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-16 00:00:16</sys_updated_on>
+    </sys_script_include>
+</record_update>

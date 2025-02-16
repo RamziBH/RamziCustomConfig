@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_declarative_action_assignment">
+    <sys_declarative_action_assignment action="INSERT_OR_UPDATE">
+        <action/>
+        <action_attributes/>
+        <action_name>incident_add_external_user(requestor)</action_name>
+        <action_payload/>
+        <action_type>field</action_type>
+        <active>true</active>
+        <button_type>primary</button_type>
+        <client_action/>
+        <client_conditions/>
+        <client_conditions_on_fields/>
+        <client_script><![CDATA[function onClick() {
+
+    getMessages(["Department", "Location", "External", "Add external user", "not a valid phone number", "Invalid email address", "First name", "Last name", "Email address", "Phone number", "Preferred language", "Select language", "English", "French"], onCreate);
+
+
+    function onCreate(tMsgs) {
+
+        var strTitle = tMsgs["Add external user"];
+        var strValidPhone = tMsgs["not a valid phone number"];
+        var strValidEmail = tMsgs["Invalid email address"];
+        var regexemail = /^[A-Za-z0-9+_.-]+@(.+)$/;
+        var regphone = /^[(]?(\d{3})[)]?[-|\s]?(\d{3})[-|\s]?(\d{4})$/;
+
+        var fields = [{
+                type: 'string',
+                name: 'first_name',
+                label: tMsgs['First name'],
+                mandatory: true
+            },
+            {
+                type: 'string',
+                name: 'last_name',
+                label: tMsgs['Last name'],
+                mandatory: true
+            },
+
+            {
+                type: 'string',
+                name: 'email',
+                label: tMsgs['Email address'],
+                mandatory: false
+            },
+            {
+                type: 'string',
+                name: 'phone_number',
+                label: tMsgs['Phone number'],
+                mandatory: false
+            },
+
+            {
+                type: 'reference',
+                name: 'u_affected_department',
+                label: tMsgs['Department'],
+                mandatory: false,
+                reference: 'cmn_department',
+                referringTable: 'incident',
+                referringRecordId: g_form.getUniqueValue(),
+               value:g_scratchpad.externalDepartment, 
+                displayValue: "External"
+
+
+            },
+            {
+                type: 'reference',
+                name: 'u_affected_location',
+                label: tMsgs['Location'],
+                mandatory: false,
+                reference: 'cmn_location',
+                referringTable: 'incident',
+                referringRecordId: g_form.getUniqueValue(),
+                value: g_scratchpad.externalLocation,
+                displayValue: "External"
+
+            },
+
+
+            {
+                type: 'choice',
+                name: 'preferred_language',
+                label: tMsgs['Preferred language'],
+                value: tMsgs['Select language'],
+                choices: [{
+                        displayValue: tMsgs['English'],
+                        value: 'en',
+                        selected: true
+                    },
+                    {
+                        displayValue: tMsgs['French'],
+                        value: 'fq'
+                    }
+                ],
+                mandatory: false
+            }
+        ]
+
+        g_modal.showFields({
+            title: strTitle,
+            fields: fields,
+            size: 'xl',
+            height:'900'
+
+        }).then(function(fieldValues) {
+
+
+		
+            var validEmail = true;
+			if(fieldValues.updatedFields[2].value) {
+				validEmail = validateData(fieldValues.updatedFields[2].value, regexemail, strValidEmail);
+			}
+            var validPhone = (fieldValues.updatedFields[3].value == "" || fieldValues.updatedFields[3].value === undefined) ? true : validateData(fieldValues.updatedFields[3].value, regphone, strValidPhone);
+
+            if (validEmail && validPhone) {
+
+                var strData = JSON.stringify(fieldValues.updatedFields);
+
+                var ga = new GlideAjax("global.HoCITSMCommonAjaxUtils");
+                ga.addParam("sysparm_name", "createExternalUser");
+                ga.addParam("sysparm_data", strData);
+                ga.getXMLAnswer(setAnswer);
+            }
+
+        }); //then
+
+
+
+        function validateData(itemValue, regExpression, strMsg) {
+
+            if (itemValue && !regExpression.test(itemValue)) {
+                alert(strMsg);
+                return false;
+
+            }
+            return true;
+        }
+
+
+        function setAnswer(response) {
+
+            if (response.length < 37 && response.length > 0) {
+
+                g_form.setValue('caller_id', response);
+
+            }
+            if (response.length > 36) {
+                g_form.clearValue('caller_id');
+                g_form.addErrorMessage(response);
+            }
+        }
+
+
+    }
+
+
+
+}]]></client_script>
+        <confirmation_message/>
+        <confirmation_required>false</confirmation_required>
+        <create_access>false</create_access>
+        <declarative_action_render_mode/>
+        <declarative_action_type>client_script</declarative_action_type>
+        <delete_access>false</delete_access>
+        <dependency/>
+        <description>Get/Add external user</description>
+        <design_icon display_value="user-plus-outline">user_plus_outline</design_icon>
+        <dynamic_record_condition/>
+        <dynamic_script_condition/>
+        <enable_dynamic_evaluation>false</enable_dynamic_evaluation>
+        <enable_for_all_experiences>false</enable_for_all_experiences>
+        <enabled>true</enabled>
+        <experience_restricted>false</experience_restricted>
+        <field_name>caller_id</field_name>
+        <field_type>glide_date</field_type>
+        <form_fields_required>false</form_fields_required>
+        <form_position/>
+        <group/>
+        <group_by>false</group_by>
+        <icon/>
+        <label>Incident Add External User(requestor)</label>
+        <model display_value="Field">15920e6d534723003eddddeeff7b1244</model>
+        <model_conditions/>
+        <model_field_required/>
+        <order>0</order>
+        <payload_map/>
+        <read_access>false</read_access>
+        <record_conditions/>
+        <record_selection_required>false</record_selection_required>
+        <required_roles/>
+        <required_translations/>
+        <required_user_role_names/>
+        <requires_value>false</requires_value>
+        <script_condition/>
+        <scripted_client_condition/>
+        <server_script/>
+        <specificity>21</specificity>
+        <sys_class_name>sys_declarative_action_assignment</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-15 23:58:44</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>b61b09788373d610dbedb3a6feaad37b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>incident_add_external_user(requestor)</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="RBH customization" source="x_1610537_rbh_cust">054a89748373d610dbedb3a6feaad3d6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="RBH customization">054a89748373d610dbedb3a6feaad3d6</sys_scope>
+        <sys_update_name>sys_declarative_action_assignment_b61b09788373d610dbedb3a6feaad37b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-15 23:58:44</sys_updated_on>
+        <table>incident</table>
+        <tooltip>External User</tooltip>
+        <ui_component/>
+        <view/>
+        <workspace/>
+        <write_access>false</write_access>
+    </sys_declarative_action_assignment>
+    <sys_translated_text action="delete_multiple" query="documentkey=b61b09788373d610dbedb3a6feaad37b"/>
+</record_update>
