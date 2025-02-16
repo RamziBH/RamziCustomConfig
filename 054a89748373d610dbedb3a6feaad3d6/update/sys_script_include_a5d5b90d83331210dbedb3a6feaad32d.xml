@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1610537_rbh_cust.EnergirComputerEquipment</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>EnergirComputerEquipment</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var EnergirComputerEquipment = Class.create();
+EnergirComputerEquipment.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+
+Computerequipmentloan: function() {
+    var datedesired = new GlideDateTime(this.getParameter('sysparm_desireddate'));
+    var dateretour = new GlideDateTime(this.getParameter('sysparm_returndate'));
+
+    var desiredMillis = datedesired.getNumericValue();
+    var returnMillis = dateretour.getNumericValue();
+
+    var choices = [];
+    var choiceF = new GlideRecord('question_choice');
+    choiceF.addEncodedQuery('question=7208afed87f5ce10124b7777dabb3573^inactive=false^ORDERBYorder');
+    choiceF.query();
+    while (choiceF.next()) {
+        choices.push(choiceF.text.toString());
+    }
+
+    var gr = new GlideRecord('x_1610537_rbh_cust_u_catalog_variables');
+    gr.addEncodedQuery('ritm_cat_item=1d64232987f5ce10124b7777dabb35df^optn_item_option_new=7208afed87f5ce10124b7777dabb3573^ORoptn_item_option_new=3817276d87f5ce10124b7777dabb3560^ORoptn_item_option_new=3f87e36d87f5ce10124b7777dabb3522');
+    gr.query();
+
+    while (gr.next()) {
+        var gitem = new GlideRecord('u_catalog_variables');
+        gitem.addEncodedQuery('optn_item_option_new=3f87e36d87f5ce10124b7777dabb3522^mtom_request_item=' + gr.mtom_request_item); 
+        gitem.query();
+
+        var gitemreturn = new GlideRecord('u_catalog_variables');
+        gitemreturn.addEncodedQuery('optn_item_option_new=3817276d87f5ce10124b7777dabb3560^mtom_request_item=' + gr.mtom_request_item);
+        gitemreturn.query(); 
+
+        if (gitem.next() && gitemreturn.next()) {
+            var returndateItem = new GlideDateTime(gitem.optn_value).getNumericValue();
+            var desireddateItem = new GlideDateTime(gitemreturn.optn_value).getNumericValue();
+
+            var overlap = (desiredMillis < returndateItem && returnMillis > desireddateItem);
+
+            if (overlap) {
+                var indexToRemove = choices.indexOf(gr.optn_value.toString());
+                if (indexToRemove !== -1) {
+                    choices.splice(indexToRemove, 1);
+                }
+            }
+        }
+    }
+
+    return JSON.stringify(choices);
+},
+
+
+    Computerequipmentloancsti: function() {
+       var datedesired = new GlideDateTime(this.getParameter('sysparm_desireddate'));
+    var dateretour = new GlideDateTime(this.getParameter('sysparm_returndate'));
+
+    var desiredMillis = datedesired.getNumericValue();
+    var returnMillis = dateretour.getNumericValue();
+
+    var choices = [];
+    var choiceF = new GlideRecord('question_choice');
+    choiceF.addEncodedQuery('question=4c27472a87350650124b7777dabb3503^inactive=false^ORDERBYorder');
+    choiceF.query();
+    while (choiceF.next()) {
+        choices.push(choiceF.text.toString());
+    }
+
+    var gr = new GlideRecord('u_catalog_variables');
+    gr.addEncodedQuery('ritm_cat_item=c115432687350650124b7777dabb35cb^optn_item_option_new=12664ba687350650124b7777dabb353e^ORoptn_item_option_new=4c27472a87350650124b7777dabb3503^ORoptn_item_option_new=36c687e687350650124b7777dabb3556');
+    gr.query();
+
+    while (gr.next()) {
+        var gitem = new GlideRecord('u_catalog_variables');
+        gitem.addEncodedQuery('optn_item_option_new=36c687e687350650124b7777dabb3556^mtom_request_item=' + gr.mtom_request_item); 
+        gitem.query();
+
+        var gitemreturn = new GlideRecord('u_catalog_variables');
+        gitemreturn.addEncodedQuery('optn_item_option_new=12664ba687350650124b7777dabb353e^mtom_request_item=' + gr.mtom_request_item);
+        gitemreturn.query(); 
+
+        if (gitem.next() && gitemreturn.next()) {
+            var returndateItem = new GlideDateTime(gitem.optn_value).getNumericValue();
+            var desireddateItem = new GlideDateTime(gitemreturn.optn_value).getNumericValue();
+
+            var overlap = (desiredMillis < returndateItem && returnMillis > desireddateItem);
+
+            if (overlap) {
+                var indexToRemove = choices.indexOf(gr.optn_value.toString());
+                if (indexToRemove !== -1) {
+                    choices.splice(indexToRemove, 1);
+                }
+            }
+        }
+    }
+
+    return JSON.stringify(choices);
+},
+
+
+
+    type: 'EnergirComputerEquipment'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-16 21:43:34</sys_created_on>
+        <sys_id>a5d5b90d83331210dbedb3a6feaad32d</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>EnergirComputerEquipment</sys_name>
+        <sys_package display_value="RBH customization" source="x_1610537_rbh_cust">054a89748373d610dbedb3a6feaad3d6</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="RBH customization">054a89748373d610dbedb3a6feaad3d6</sys_scope>
+        <sys_update_name>sys_script_include_a5d5b90d83331210dbedb3a6feaad32d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-16 21:44:29</sys_updated_on>
+    </sys_script_include>
+</record_update>
