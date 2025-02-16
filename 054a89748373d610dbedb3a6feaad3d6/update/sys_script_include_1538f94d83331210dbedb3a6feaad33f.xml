@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1610537_rbh_cust.StatusReportPRJMJR</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>StatusReportPRJMJR</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var StatusReportPRJMJR = Class.create();
+StatusReportPRJMJR.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+
+    statusreport: function(filter) {
+		var unique = [];
+        var latestStatus = {}; 
+        var statusr = new GlideRecord('project_status');
+        statusr.addEncodedQuery(filter);
+        statusr.orderByDesc('as_on'); 
+        statusr.query();
+
+        while (statusr.next()) {
+            var projectId = statusr.project.toString();
+            var statusDate = statusr.as_on;
+
+            if (!latestStatus[projectId] || statusDate > latestStatus[projectId].date) {
+                latestStatus[projectId] = {
+                    sys_id: statusr.sys_id.toString(),
+                    date: statusDate
+                };
+            }
+        }
+
+        for (var project in latestStatus) {
+            //gs.print('Project: ' + project + ' - Latest sys_id: ' + latestStatus[project].sys_id + ' (as_on: ' + latestStatus[project].date + ')');
+			unique.push(latestStatus[project].sys_id);
+        }
+
+		return unique ;
+    },
+
+    type: 'StatusReportPRJMJR'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-16 21:53:50</sys_created_on>
+        <sys_id>1538f94d83331210dbedb3a6feaad33f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>StatusReportPRJMJR</sys_name>
+        <sys_package display_value="RBH customization" source="x_1610537_rbh_cust">054a89748373d610dbedb3a6feaad3d6</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="RBH customization">054a89748373d610dbedb3a6feaad3d6</sys_scope>
+        <sys_update_name>sys_script_include_1538f94d83331210dbedb3a6feaad33f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-16 21:53:50</sys_updated_on>
+    </sys_script_include>
+</record_update>
