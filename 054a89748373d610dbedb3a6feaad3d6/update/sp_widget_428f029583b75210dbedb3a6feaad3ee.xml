@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function( $rootScope, $scope ) {
+  /* widget controller */
+  var c = this;
+	var g_form = $scope.page.g_form;
+	console.log( ">>>> START" );
+	console.log( "$scope" );
+	console.log( $scope );
+	console.log( "g_form.getValue( business_service ).toString()" );
+	console.log( g_form.getValue( "business_service" ).toString() );
+
+	c.fieldTypesToReplace = [ "glide_list" ];
+	c.formConfig = {}
+	c.formConfig.runningFrom = g_form.getValue( "running_from" );
+	c.formConfig.entityState = g_form.getValue( "entity_state" );
+	c.formConfig.refreshing = [];
+
+
+	// Handle toggling a service offering event
+	$scope.$on( "offeringToggled", function( events, args ) {
+		console.log( ">>>> $scope.$on()" );
+		console.log( "events" );
+		console.log( events );
+		console.log( "args" );
+		console.log( args );
+		
+		var value = g_form.getValue( "requested_offering" );
+		var currentSelection = ( value == "" ? [] : g_form.getValue( "requested_offering" ).split( "," ) );
+		if ( args.active  ) {
+			if ( currentSelection.indexOf( args.sys_id ) == -1 ) {
+				currentSelection.push( args.sys_id );
+				
+				if ( !c.data.config.showingEnvironments )
+					args.nonProductionRelatedOfferings.forEach( function( nonProdRelated ) {
+						currentSelection.push( nonProdRelated );
+					} )
+			}
+		} else {
+			if ( currentSelection.indexOf( args.sys_id ) != -1 ) {
+				currentSelection.splice( currentSelection.indexOf( args.sys_id ), 1 );
+
+				if ( !c.data.config.showingEnvironments )
+					args.nonProductionRelatedOfferings.forEach( function( nonProdRelated ) {
+						currentSelection.splice( currentSelection.indexOf( nonProdRelated ), 1 );
+					} )
+			}
+		}
+		
+		console.log( "currentSelection" );
+		console.log( currentSelection );
+		g_form.setValue( "requested_offering", currentSelection.join( "," ) );
+		
+		console.log( ">>>> $scope.$on() -- End" );
+	} )
+
+	
+	// Handle update of a field event
+	$rootScope.$on( "field.change", function( event, parms ) {
+		console.log( ">>>> $rootScope.$on()" );
+		console.log( "event" );
+		console.log( event );
+		console.log( "parms" );
+		console.log( parms );
+
+		if ( parms.field.name == "business_service" ) {
+			console.log( ">>>> Business Service updated" );
+			$scope.fetchData( "getBusinessServiceOfferings" );
+		}
+
+		if ( parms.field.name == "entity" ) {
+			console.log( ">>>> Requested for updated" );
+			g_form.clearValue( "identity" );
+			c.data.config.showList = false;
+			c.data.identityConsumedOfferings = undefined;
+
+			try {
+				var sysIdIdentity = g_form.getValue( "entity" ).toString();
+
+				if ( typeof sysIdIdentity !== "undefined" && sysIdIdentity !== "" ) {
+						$scope.fetchData( "getEntity" );
+						c.data.config.enableFetching = true;
+						c.data.config.showList = true;
+					}
+			} catch( err ) {
+				g_form.clearValue( "entity" );
+				g_form.clearValue( "identity" );
+			}
+		}
+
+		if ( parms.field.name == "identity" ) {
+			console.log( ">>>> Identity updated" );
+			c.data.entity = undefined;
+			try {
+				var sysIdIdentity = g_form.getValue( "identity" ).toString();
+
+				if ( typeof sysIdIdentity !== "undefined" && sysIdIdentity !== "" ) {
+						c.data.config.enableFetching = true;
+						c.data.config.showList = true;
+						$scope.fetchData( "getIdentityOfferings" );
+					}
+			} catch( err ) {
+				g_form.clearValue( "identity" );
+			}
+		}
+
+		if ( parms.field.name == "requested_offering" ) {
+			$scope.refreshGroupedOfferings( g_form.getValue( "requested_offering" ).toString().split( "," ) );
+		}
+
+		console.log( ">>>> $rootScope.$on() -- End" );
+	} );							
+	
+
+	// Apply the identity consumed offering so the display reflect the identity current status
+	// or the one updated from the back end in the requested_offering field, if somehow done that way
+	$scope.refreshGroupedOfferings = function( requestedOfferings ) {
+		console.log( ">>>> $scope.refreshGroupedOfferings()" );
+		console.log( "requestedOfferings" );
+		console.log( requestedOfferings );
+		// Mets à jour les switches
+
+		if ( Array.isArray( requestedOfferings ) ) {
+			for ( var group in c.data.groupedOfferings ) {
+//				console.log( "group" );
+//				console.log( group );
+
+				c.data.groupedOfferings[ group ].forEach( function( offering ) {
+//					console.log( "offering" );
+//					console.log( offering );
+					offering.active = requestedOfferings.indexOf( offering.sys_id ) !== -1;
+				});
+			}
+		}
+		console.log( ">>>> $scope.refreshGroupedOfferings() -- End" );
+	};
+	
+
+	// Fetch the data on the server side
+	$scope.fetchData = function( action ) {
+		console.log( ">>>> $scope.fetchData()" );
+		console.log( "action" );
+		console.log( action );
+		
+		c.data.config.enableFetching = true;
+		
+		var serverParms = {};
+		serverParms.action = action;
+		try {
+			serverParms.business_service = g_form.getValue( "business_service" ).toString();
+		} catch( err ) {}
+		try {
+			serverParms.entity = g_form.getValue( "entity" ).toString();
+		} catch( err ) {}
+		try {
+			serverParms.identity = g_form.getValue( "identity" ).toString();
+		} catch( err ) {}
+		serverParms.config = c.data.config;
+
+		console.log( "serverParms" );
+		console.log( serverParms );
+
+		c.server.get( serverParms ).then( function( response ) {
+			console.log( ">>>> $scope.fetchData.server.get.then()" );
+			console.log( "response" );
+			console.log( response );
+
+			c.data.config.enableMore = response.data.config.enableMore;
+			c.data.config.showingMore = response.data.config.showingMore;
+			c.data.config.enableEnvironment = response.data.config.enableEnvironment
+			c.data.config.showingEnvironments = response.data.config.showingEnvironments;
+			c.data.config.showList = response.data.config.showList;
+
+			c.data.config.enableFetching = false;
+			
+			if ( typeof response.data.groupedOfferings !== "undefined" ) {
+				console.log( ">>>> $scope.fetchData.server.get.then() : getBusinessServiceOfferings" );
+
+				$scope.manageGroupedOfferingsResponse( response.data.groupedOfferings );
+			}
+			
+			if ( typeof response.data.entity !== "undefined" ) {
+				console.log( ">>>> $scope.fetchData.server.get.then() : getEntity" );
+
+				$scope.manageEntityResponse( response.data.entity );
+			}			
+
+			if ( typeof response.data.identityConsumedOfferings !== "undefined" ) {
+				console.log( ">>>> $scope.fetchData.server.get.then() : getIdentityOfferings" );
+
+				$scope.manageConsumedOfferingResponse( response.data.identityConsumedOfferings );
+			}
+
+			c.data.config.enableMore = response.data.config.enableMore;
+			c.data.config.enableEnvironment = response.data.config.enableEnvironment
+
+			console.log( ">>>> $scope.fetchData.server.get.then() -- End" );
+			console.log( "$scope.data" );
+			console.log( $scope.data );
+		} )		
+		
+		console.log( ">>>> $scope.fetchData() -- End" );
+	};
+	
+	
+	// Handle the fetch data response for an entity
+	$scope.manageEntityResponse = function( entity ) {
+		console.log( ">>>> $scope.manageEntityResponse" );
+		console.log( "entity" );
+		console.log( entity );
+
+		c.data.entity = entity;
+		if ( typeof entity.mainIdentity !== "undefined" )
+			g_form.setValue( "identity", entity.mainIdentity.toString() );
+		else
+			if ( typeof entity.allIdentity !== "undfefined" && entity.allIdentity.length > 0 )
+				g_form.setValue( "identity", entity.allIdentity[ 0 ].toString() );
+			else {
+				c.data.config.showList = false;
+				c.data.config.enableFetching = false;
+			}
+
+		g_form.setVisible( "identity", entity.allIdentity.length > 1 || typeof entity.mainIdentity === "undefined" );
+	};
+
+	
+	// Handle the fetch data response for a business service offering
+	$scope.manageGroupedOfferingsResponse = function( groupedOfferings ) {
+		console.log( ">>>> $scope.manageGroupedOfferingsResponse" );
+		console.log( "groupedOfferings" );
+		console.log( groupedOfferings );
+
+		var customOrder = [ "Production" ];
+		c.data.groupedOfferings = $scope.prepareGroupedOfferings( groupedOfferings, customOrder );
+	};
+
+	
+	// Handle the fetch data response for an identity consumed offering
+	$scope.manageConsumedOfferingResponse = function( consumedOffering ) {
+		console.log( ">>>> $scope.manageGroupedOfferingResponse" );
+
+		c.data.identityConsumedOfferings = consumedOffering;
+		$scope.refreshGroupedOfferings( consumedOffering );
+		g_form.setValue( "requested_offering", consumedOffering.join( "," ) );
+		g_form.setValue( "initial_offering", consumedOffering.join( "," ) );
+	};
+
+	
+	// Sort the business service service offering to correspond to what is desired
+	$scope.prepareGroupedOfferings = function( groupedOfferings, customOrder ) {
+		console.log( ">>>> $scope.prepareGroupedOfferings" );
+		var sortedOfferings = {};
+
+		// Iterate over the groups in groupedOfferings
+		Object.keys( groupedOfferings )
+			.sort( function( a, b ) {
+			// Custom order logic
+			var indexA = customOrder.indexOf( a );
+			var indexB = customOrder.indexOf( b );
+
+			if ( indexA !== -1 && indexB !== -1 ) {
+				return indexA - indexB; // Both are in customOrder
+			}
+			if ( indexA !== -1 ) return -1; // a is in customOrder
+			if ( indexB !== -1 ) return 1; // b is in customOrder
+
+			// Alphabetical order for the rest
+			return a.localeCompare( b );
+		} )
+			.forEach( function( key ) {
+			sortedOfferings[ key ] = groupedOfferings[ key ];
+		} );
+
+		console.log( ">>>> $scope.prepareGroupedOfferings -- End" );
+		return sortedOfferings;
+	};
+
+
+	// Handle field substitution field by field
+	c.fields = ( function() {
+		console.log( ">>>> c.fields" );
+		var fields = [];
+		var fieldNames = g_form.getFieldNames();
+		for ( var f in fieldNames ) {
+			var field = g_form.getField( fieldNames[ f ] );
+			console.log( "field" );
+			console.log( field );
+			if ( c.fieldTypesToReplace.indexOf( field.type ) > -1 ) {
+				field.__c_data = c.data;
+				field.__c_data.funct = console.log;
+				fields.push( field );
+			}
+		}
+		
+		return fields;
+	} )();
+	
+		
+		
+	// Initilaisation
+	$scope.fetchData( "getBusinessServiceOfferings" );
+
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>/* Remove the gray background */&#13;
+._md {&#13;
+    background-color: white;&#13;
+}&#13;
+&#13;
+/* Conteneur principal de la ligne */&#13;
+.row {&#13;
+  display: flex;               /* Utilise flexbox pour aligner les éléments */&#13;
+  justify-content: space-between; /* Place le libellé à gauche et le switch à droite */&#13;
+}&#13;
+&#13;
+/* Conteneur principal de la ligne */&#13;
+.column {&#13;
+  display: flex;               /* Utilise flexbox pour aligner les éléments */&#13;
+  flex-direction: column;&#13;
+}&#13;
+&#13;
+/* Forcer la largeur à occuper tout l'espace */&#13;
+.full-width {&#13;
+  width: 100%;                 /* Étend la ligne sur toute la largeur disponible */&#13;
+}&#13;
+&#13;
+/* Libellé */&#13;
+.label {&#13;
+  font-size: 1rem;             /* Taille standard du texte */&#13;
+  font-weight: normal;         /* Peut être ajusté si nécessaire */&#13;
+}&#13;
+&#13;
+/* Description sous la ligne &#13;
+.description {&#13;
+  color: gray;&#13;
+  margin-left: 20px;&#13;
+} */&#13;
+&#13;
+/* Switch */&#13;
+.switch {&#13;
+  margin-left: auto;           /* Force le switch à aller à l'extrême droite */&#13;
+}&#13;
+/*&#13;
+.md-subheader .md-subheader-inner {&#13;
+    display: block;&#13;
+    padding: 0px;&#13;
+}&#13;
+*/&#13;
+.md-subheader {&#13;
+    background-color: #f3f3f3; /* Light gray for contrast */&#13;
+    color: #333; /* Darker text color for readability */&#13;
+    font-weight: bold; /* Make the text stand out */&#13;
+    padding: 8px 8px; /* Add some padding for spacing */&#13;
+    border-radius: 4px; /* Slight rounding for a softer appearance */&#13;
+    margin-bottom: 4px; /* Space below the subheader */&#13;
+    border-left: 4px solid #009fdf; /* Add a subtle colored left border */&#13;
+}&#13;
+&#13;
+&#13;
+md-checkbox.md-checked .md-icon {&#13;
+    background-color: #009fdf !important; /* Light blue for checked state */&#13;
+    border-color: #009fdf !important; /* Border in light blue */&#13;
+}&#13;
+&#13;
+/* Custom Switch Styles */&#13;
+md-switch.md-checked .md-thumb {&#13;
+    background-color: #009fdf !important; /* Light blue for the thumb */&#13;
+}&#13;
+&#13;
+md-switch.md-checked .md-bar {&#13;
+    background-color: #002855 !important; /* Dark blue for the bar */&#13;
+}&#13;
+&#13;
+&#13;
+/* Remove fixed height for md-list-item */&#13;
+md-list-item {&#13;
+    min-height: auto !important; /* Allow height to adjust dynamically */&#13;
+    height: auto !important; /* Ensure no fixed height */&#13;
+    padding: 8px 16px; /* Add consistent padding */&#13;
+    display: flex; /* Maintain flex layout for proper alignment */&#13;
+    align-items: flex-start; /* Align content to the top */&#13;
+}&#13;
+&#13;
+/* Ensure the switch stays aligned to the right */&#13;
+md-list-item .row {&#13;
+    display: flex; /* Flex layout for row alignment */&#13;
+    justify-content: space-between; /* Push switch to the right */&#13;
+    width: 100%; /* Ensure full width for alignment */&#13;
+}&#13;
+&#13;
+/* Dynamically adjust column alignment */&#13;
+md-list-item .column {&#13;
+    display: flex; /* Flexbox for vertical layout */&#13;
+    flex-direction: column; /* Stack content vertically */&#13;
+}&#13;
+&#13;
+/* Reduce space for items without descriptions */&#13;
+md-list-item .description {&#13;
+    margin-top: 4px; /* Add spacing above description */&#13;
+  	margin-left: 20px;&#13;
+    color: #666; /* Use a lighter text color */&#13;
+}&#13;
+&#13;
+/* Switch alignment tweaks */&#13;
+md-switch {&#13;
+    margin: 0; /* Remove unnecessary margins */&#13;
+    align-self: center; /* Center the switch vertically in its container */&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>service-offering-list-collector-skin</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  for ( var f in scope.c.fields ) {
+		angular.element( 'div#' + scope.c.fields[ f ].name ).addClass( 'ng-hide' );
+	}
+}]]></link>
+        <name>Service Offerings List Collector Skin</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[( function( param ) {
+	
+	data.errors = [];
+
+	data.identityConsumedOfferings = undefined;
+	data.groupedOfferings = undefined;
+	data.entity = undefined;
+
+	if ( typeof input !== "undefined" && typeof input.action !== "undefined" ) {
+		data.config = input.config;
+		
+		try {
+			var entity = ( typeof input.entity !== "undefined" && input.entity != "" 
+											? new x_gamlp_idm_lc.ETN_Class_sys_user( input.entity.toString() ) 
+											: undefined );
+			var identity = ( typeof input.identity !== "undefined" && input.identity != "" 
+											? new x_gamlp_cmdb_user.ETN_Class_x_gamlp_cmdb_user_user_account( input.identity.toString() ) 
+											: undefined );
+			var businessService = ( typeof input.business_service !== "undefined" && input.business_service != "" 
+														 ? new x_gamlp_idm_lc.ETN_Class_cmdb_ci_service( input.business_service.toString() ) 
+														 : undefined );
+
+			if ( input.action == "getIdentityOfferings" ) {
+				try {
+					identity.refreshServiceOfferingConsumed( businessService );
+					var identityConsumedOfferings = businessService.offerings().getSetIntersection( identity.consumes() );
+					data.identityConsumedOfferings = identityConsumedOfferings.toJSON( [ "sys_id" ] ).map( function( field ) { return field.sys_id.value; } );
+
+				} catch( err ) {
+					data.errors.push( { code:10011, message: err } )
+				}
+			}
+			
+			if ( input.action == "getEntity" ) {
+				data.entity = {};
+				
+				try {
+					data.entity.mainIdentity = entity.mainIdentity().SysId.toString();
+				} catch( err ) {
+					data.errors.push( { code:10021, message: err } )
+				}
+
+				try {
+					data.entity.allIdentity = entity.identities().toJSON( [ "sys_id" ] ).map( function( field ) { return field.sys_id.value.toString(); } );
+				} catch( err ) {
+					data.errors.push( { code:10022, message: err } )
+				}
+			}
+
+			if ( input.action == "getBusinessServiceOfferings" ) {
+				try {
+					var groupedOfferings = {};
+					var filter = x_gamlp_idm_lc.ETN_Class_service_offering.FILTER_IS_OPERATIONAL
+					var order = x_gamlp_idm_lc.ETN_Class_service_offering.SORT_ON_NAME_ASC();
+
+					businessService.offerings( filter, order ).forEach( function( offering ) {
+						if ( typeof groupedOfferings[ offering.UsedFor.toString() ] === "undefined" )
+							groupedOfferings[ offering.UsedFor.toString() ] = [];
+
+						var jsonOffering = {};
+						jsonOffering.name = offering.Name.toString()
+						jsonOffering.sys_id = offering.SysId.toString();
+						jsonOffering.short_description = offering.ShortDescription.toString();
+						jsonOffering.listed_on_more = offering.XGamlpIdmLcListedOnMore == true;
+						jsonOffering.nonProductionRelatedOfferings = offering.nonProductionRelatedOfferings().toJSON( [ "sys_id" ] ).map( function( field ) { return field.sys_id.value; } );
+
+						jsonOffering.active = "false";
+
+						if ( jsonOffering.listed_on_more )
+							data.config.enableMore = true;
+
+						if ( offering.UsedFor.toString() != "Production" )
+							data.config.enableEnvironment = true;
+
+						groupedOfferings[ offering.UsedFor.toString() ].push( jsonOffering );
+//						data.config.showList = true;
+					} )
+
+					data.groupedOfferings = groupedOfferings;
+
+				} catch( err ) {
+					data.errors.push( { code:10031, message: err } )
+				}
+			}
+		} catch( err ) {
+			data.errors.push( { code:10000, message: err } )
+		}
+		
+	} else {
+		data.config = {};
+		data.config.enableMore = false
+		data.config.showingMore = false;
+		data.config.enableEnvironment = false
+		data.config.showingEnvironments = false;
+		data.config.enableFetching = true;
+		data.config.showList = false;
+	}
+
+} )();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-17 18:15:41</sys_created_on>
+        <sys_id>428f029583b75210dbedb3a6feaad3ee</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Service Offerings List Collector Skin</sys_name>
+        <sys_package display_value="RBH customization" source="x_1610537_rbh_cust">054a89748373d610dbedb3a6feaad3d6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="RBH customization">054a89748373d610dbedb3a6feaad3d6</sys_scope>
+        <sys_update_name>sp_widget_428f029583b75210dbedb3a6feaad3ee</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-17 18:15:41</sys_updated_on>
+        <template><![CDATA[<md-content>
+    <service-offering-field ng-repeat="parm1 in c.fields" field="parm1"></service-offering-field>
+</md-content>]]></template>
+    </sp_widget>
+</record_update>

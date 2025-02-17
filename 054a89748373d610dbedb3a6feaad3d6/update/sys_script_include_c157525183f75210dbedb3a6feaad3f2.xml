@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1610537_rbh_cust.ETN_Class_x_gamlp_cmdb_user_user_account</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>ETN_Class_x_gamlp_cmdb_user_user_account</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[gs.include( "ETN_Utils_Framework" );
+
+
+var ETN_Class_x_gamlp_cmdb_user_user_account = x_gamlp_obj_frwk.ETN_Class.create();
+
+ETN_Class_x_gamlp_cmdb_user_user_account.prototype = 
+	x_gamlp_obj_frwk.ETN_Object.extendsObject( x_gamlp_obj_frwk.ETN_Class_cmdb_ci, 
+	x_gamlp_obj_frwk.ETN_Object.extendsObject( x_gamlp_idm_user.ETN_Abstract_x_gamlp_cmdb_user_user_account, {
+
+
+	get type_scope() { return gs.getCurrentScopeName(); },
+    type: 'ETN_Class_x_gamlp_cmdb_user_user_account'
+} ) );]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-17 18:48:05</sys_created_on>
+        <sys_id>c157525183f75210dbedb3a6feaad3f2</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>ETN_Class_x_gamlp_cmdb_user_user_account</sys_name>
+        <sys_package display_value="RBH customization" source="x_1610537_rbh_cust">054a89748373d610dbedb3a6feaad3d6</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="RBH customization">054a89748373d610dbedb3a6feaad3d6</sys_scope>
+        <sys_update_name>sys_script_include_c157525183f75210dbedb3a6feaad3f2</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-17 18:48:05</sys_updated_on>
+    </sys_script_include>
+</record_update>

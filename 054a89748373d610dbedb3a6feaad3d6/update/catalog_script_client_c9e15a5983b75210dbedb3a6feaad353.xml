@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="catalog_script_client">
+    <catalog_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_catalog>true</applies_catalog>
+        <applies_extended>false</applies_extended>
+        <applies_req_item>false</applies_req_item>
+        <applies_sc_task>false</applies_sc_task>
+        <applies_target_record>false</applies_target_record>
+        <applies_to>set</applies_to>
+        <cat_item/>
+        <cat_variable/>
+        <condition/>
+        <description/>
+        <field/>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>On Submit Validation</name>
+        <order/>
+        <published_ref/>
+        <script><![CDATA[var validations = {};
+
+validations.Validation_Basic = ( function() {
+	"use strict";
+
+	function _validate() {
+		console.info( "x_gamlp_idm_lc.On Submit Validation.validations.Validation_Basic._validate()" );
+		var result = [];
+//		if ( g_form.getValue( "running_from" ) != "order_guide" ) {
+			var requestedOfferings = g_form.getValue( "requested_offering" ).toString().split( "," ).sort();
+			var initialOfferings = g_form.getValue( "initial_offering" ).toString().split( "," ).sort();
+
+			if ( requestedOfferings.join( "," ) == initialOfferings.join( "," ) ) {
+				if ( g_form.getValue( "running_from" ) == "order_guide" ) {
+					result.push( "x_gamlp_idm_lc.form.ERROR.Validation.NoChangesDetectedOrderGuide" );
+				} else {
+					result.push( "x_gamlp_idm_lc.form.ERROR.Validation.NoChangesDetected" );
+				}
+			}
+//		}
+
+		console.info( "x_gamlp_idm_lc.On Submit Validation.validations.Validation_Basic._validate() result=" + result.join( "," ) );
+		return result;
+	}
+
+	return {
+		validate: function() {
+			console.info( "x_gamlp_idm_lc.On Submit Validation.validations.Validation_Basic.validate()" );
+			return _validate();
+		},
+	};
+
+} );
+
+validations.Validation_SingleOfferingSelectionPerEnvironment = ( function() {
+	"use strict";
+
+	var _basicValidation = validations.Validation_Basic();
+
+	function _validate() {
+		console.info( "x_gamlp_idm_lc.On Submit Validation.validations.Validation_SingleOfferingSelectionPerEnvironment._validate()" );
+		var result = [];
+		var businessService = JSON.parse( g_form.getValue( "business_service_config" ) );
+
+		var selectedOfferings = g_form.getValue( "requested_offering" );
+		var selectedPlatforms = businessService.getOfferings.filter( function( offering ) {
+				return selectedOfferings.indexOf( offering.sys_id.value.toString() ) != -1;
+			}, this )
+			.map( function( offering ) {
+				return offering.used_for.value.toString();
+			}, this );
+
+		var uniqueSelectedPlatforms = selectedPlatforms.filter( function( item, pos ) {
+				return selectedPlatforms.indexOf( item ) == pos; 
+			}, this );
+
+		if ( uniqueSelectedPlatforms.length != selectedPlatforms.length ) {
+			result.push( "x_gamlp_idm_lc.form.ERROR.Validation.SingleOfferingSelectionPerEnvironment" );
+		}
+
+		result = result.concat( _basicValidation.validate() );
+
+		console.info( "x_gamlp_idm_lc.On Submit Validation.validations.Validation_SingleOfferingSelectionPerEnvironment._validate() result=" + result.join( "," ) );
+		return result;
+	}
+
+	return {
+		validate: function() {
+			console.info( "x_gamlp_idm_lc.On Submit Validation.validations.Validation_SingleOfferingSelectionPerEnvironment._validate()" );
+			return _validate();
+		},
+	};
+
+} );
+
+validations.ValidationManager = ( function() {
+	"use strict";
+
+	var _validation;
+	var _validationType;
+
+	function _validate( validationType ) {
+		console.info( "x_gamlp_idm_lc.ValidationManager._validate()" );
+
+		if ( typeof _validationType === "undefined" || _validationType != validationType ) {
+			_validationType = validationType;
+			_validation = validations[ "Validation_" + _validationType ]();
+		}
+
+		return _validation.validate();
+	}
+
+	return {
+		validate: function( validationType ) {
+			console.info( "x_gamlp_idm_lc.ValidationManager.validate()" );
+			return _validate( validationType );
+		},
+	};
+
+} );
+
+
+function onSubmit() {
+	console.info( "x_gamlp_idm_lc.Validation.onSubmit()" );
+
+	g_form.addInfoMessage( getMessage( "x_gamlp_idm_lc.form.ValidationInProgress" ) );
+	var validation = validations.ValidationManager();
+	var messages = validation.validate( g_form.getValue( "validation" ) );
+//	g_form.clearAllFormMessages();
+	g_form.clearMessages();
+
+	messages.forEach( function( message ) {
+		g_form.addErrorMessage( getMessage( message ) );
+	}, this );
+
+	if ( messages.length != 0 ) {
+		g_form.addErrorMessage( getMessage( "x_gamlp_idm_lc.form.ERROR.FixError" ) );
+	}
+
+	return messages.length == 0;
+}]]></script>
+        <sys_class_name>catalog_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-17 18:24:52</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>c9e15a5983b75210dbedb3a6feaad353</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>On Submit Validation</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="RBH customization" source="x_1610537_rbh_cust">054a89748373d610dbedb3a6feaad3d6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="RBH customization">054a89748373d610dbedb3a6feaad3d6</sys_scope>
+        <sys_update_name>catalog_script_client_c9e15a5983b75210dbedb3a6feaad353</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-17 18:32:59</sys_updated_on>
+        <table/>
+        <type>onSubmit</type>
+        <ui_type>10</ui_type>
+        <va_supported>true</va_supported>
+        <variable_set display_value="Manage an Identity Offerings for a Business Service - WIP">d1ad8e9183b75210dbedb3a6feaad3c5</variable_set>
+        <view/>
+    </catalog_script_client>
+</record_update>

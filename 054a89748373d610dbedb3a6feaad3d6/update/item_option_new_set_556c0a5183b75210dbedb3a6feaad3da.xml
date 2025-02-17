@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="item_option_new_set">
+    <item_option_new_set action="INSERT_OR_UPDATE">
+        <create_roles/>
+        <description/>
+        <display_title>false</display_title>
+        <internal_name>manage_an_identity_offerings_for_a_business_service_order_guide_proxy</internal_name>
+        <layout>normal</layout>
+        <name/>
+        <order>100</order>
+        <read_roles/>
+        <set_attributes/>
+        <sys_class_name>item_option_new_set</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-17 18:00:10</sys_created_on>
+        <sys_id>556c0a5183b75210dbedb3a6feaad3da</sys_id>
+        <sys_mod_count>9</sys_mod_count>
+        <sys_name>Manage an Identity Offerings for a Business Service - Order Guide Proxy</sys_name>
+        <sys_package display_value="RBH customization" source="x_1610537_rbh_cust">054a89748373d610dbedb3a6feaad3d6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="RBH customization">054a89748373d610dbedb3a6feaad3d6</sys_scope>
+        <sys_update_name>item_option_new_set_556c0a5183b75210dbedb3a6feaad3da</sys_update_name>
+        <sys_updated_by>system</sys_updated_by>
+        <sys_updated_on>2025-02-17 18:04:23</sys_updated_on>
+        <title>Manage an Identity Offerings for a Business Service - Order Guide Proxy</title>
+        <type>one_to_one</type>
+        <version>9</version>
+        <write_roles/>
+    </item_option_new_set>
+</record_update>

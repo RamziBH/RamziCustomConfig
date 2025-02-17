@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1610537_rbh_cust.ManageIdentityOfferingsForBusinessServiceUIHelper</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>ManageIdentityOfferingsForBusinessServiceUIHelper</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var ManageIdentityOfferingsForBusinessServiceUIHelper = Class.create();
+
+ManageIdentityOfferingsForBusinessServiceUIHelper.ERROR_NO_MAIN_IDENTITY = "No main identity found";
+
+ManageIdentityOfferingsForBusinessServiceUIHelper.prototype = 
+	Object.extendsObject( global.AbstractAjaxProcessor, {
+
+	ajaxFunction_getMainIdentity: function() {
+		var result = {};
+
+		try {
+			var sysIdEntity = this.getParameter( "sysparm_entity" );
+			var entity = new ETN_Class_sys_user( sysIdEntity );
+
+			result = this._getMainIdentity( entity );
+		} catch( err ) {
+			result.status = {};
+			result.status.code = 11000;
+			result.status.message = err;
+		}
+
+		return JSON.stringify( result );
+	},
+
+	_getMainIdentity: function( entity ) {
+		var result = {};
+		result.status = {};
+		result.status.code = 0;
+
+		try {
+			result.mainIdentity = entity.mainIdentity().toJSON( [ "sys_id" ] );
+		} catch( err ) {
+			result.status = {};
+			result.status.code = 11001;
+			result.status.message = err;
+		}
+
+		return result;
+	},
+
+	ajaxFunction_getBusinessService: function() {
+		var result = {};
+
+		try {
+			var sysIdBusinessService = this.getParameter( "sysparm_business_service" );
+			var businessService = new ETN_Class_cmdb_ci_service( sysIdBusinessService );
+
+			result = this._getBusinessService( businessService );
+		} catch( err ) {
+			result.status = {};
+			result.status.code = 12000;
+			result.status.message = err;
+		}
+
+		return JSON.stringify( result );
+	},
+
+	_getBusinessService: function( businessService ) {
+		var result = {};
+		result.status = {};
+		result.status.code = 0;
+
+		try {
+//			var jsonToReturn = [ "ALL", { collectionLabel : "getOfferings", callBackFunction : "offerings", fields : [ "ALL" ] } ];
+			var jsonToReturn = [ "sys_id", "name", { collectionLabel : "getOfferings", callBackFunction : "offerings", fields : [ "sys_id", "name", "used_for" ] } ];
+			result.businessService = businessService.toJSON( jsonToReturn );
+		} catch( err ) {
+			result.status = {};
+			result.status.code = 12001;
+			result.status.message = err;
+		}
+
+		return result;
+	},
+
+	ajaxFunction_getOffering: function() {
+		var result = {};
+
+		try {
+			var sysIdEntity = this.getParameter( "sysparm_entity" );
+			var sysIdIdentity = this.getParameter( "sysparm_identity" );
+			var sysIdBusinessService = this.getParameter( "sysparm_business_service" );
+
+			var businessService = new ETN_Class_cmdb_ci_service( sysIdBusinessService );
+
+			try {
+				var identity = new x_gamlp_cmdb_user.ETN_Class_x_gamlp_cmdb_user_user_account( sysIdIdentity );
+				result = this._getOffering( identity, businessService );
+			} catch( err ) {
+				var entity = new ETN_Class_sys_user( sysIdEntity );
+				result = this._getOffering( entity, businessService );
+			}
+		} catch( err ) {
+			result.status = {};
+			result.status.code = 10000;
+			result.status.message = err;
+		}
+
+		return JSON.stringify( result );
+	},
+
+	_getOffering: function() {
+		return x_gamlp_obj_frwk.ETN_Abstract_JavaScript_Commons.methodPolymorphismStandardWrapper( this, "_getOffering", arguments );
+	},
+
+	__getOffering$ETN_Class_sys_user: function( entity, businessService ) {
+		var identity = entity.mainIdentity();
+
+		if ( typeof identity === "undefined"  ) {
+			throw ManageIdentityOfferingsForBusinessServiceUIHelper.ERROR_NO_MAIN_IDENTITY;
+		}
+
+		return this._getOffering( identity, businessService );
+
+	},
+
+	__getOffering$ETN_Class_x_gamlp_cmdb_user_user_account: function( identity, businessService ) {
+		var result = {};
+		result.status = {};
+		result.status.code = 0;
+
+		try {
+			identity.refreshServiceOfferingConsumed( businessService );
+
+			result.userOfferings = Array.from( businessService.offerings().getSetIntersection( identity.consumes() )
+				.map( function( offering ) {
+					return offering.SysId.toString();
+				}, this ) );
+		} catch( err ) {
+			result.status.code = 10002;
+			result.status.message = err;
+		}
+
+		return result;
+	},
+
+	ajaxFunction_getRunningFrom: function() {
+		var result = {};
+		var catItem;
+
+		try {
+			var sysIdCatItem = this.getParameter( "sysparm_cat_item" ).toString();
+			try {
+				catItem = new ETN_Class_sc_cat_item_guide( sysIdCatItem );
+			} catch( err ) {
+				try {
+					catItem = new ETN_Class_sc_cat_item( sysIdCatItem );
+				} catch( err ) {
+					result.status = {};
+					result.status.code = 14001;
+					result.status.message = err;
+				}
+			}
+
+			result = this._getRunningFrom( catItem, sysIdCatItem );
+		} catch( err ) {
+			result.status = {};
+			result.status.code = 14000;
+			result.status.message = err;
+		}
+
+		return JSON.stringify( result );
+	},
+
+	_getRunningFrom: function( parm1, parm2 ) {
+		return x_gamlp_obj_frwk.ETN_Abstract_JavaScript_Commons.methodPolymorphismStandardWrapper( this, "_getRunningFrom", arguments );
+	},
+
+	__getRunningFrom$ETN_Class_sc_cat_item: function( catItem ) {
+		var result = {};
+		result.status = {};
+		result.status.code = 0;
+		result.runningFrom = {};
+
+		result.runningFrom = { "type" : "catalog_item",
+							   "entity" : "existing",
+							   "entity_source" : "requested_for" };
+
+		var varSetNames = Array.from( catItem.variableSets().map( function( varSet ) { return varSet.InternalName.toString(); } ) );
+		result.runningFrom.variableSets = varSetNames;
+
+		return result;
+	},
+
+	__getRunningFrom$ETN_Class_sc_cat_item_guide: function( orderGuide ) {
+		var result = {};
+		result.status = {};
+		result.status.code = 0;
+		result.runningFrom = {};
+		result.runningFrom.type = "order_guide";
+		
+		var varSetNames = Array.from( orderGuide.variableSets().map( function( varSet ) { return varSet.InternalName.toString(); } ) );
+		result.runningFrom.variableSets = varSetNames;
+
+		if ( varSetNames.indexOf( "en_employee_trf_infos" ) > -1 ) {
+			result.runningFrom.entity = "existing";
+			result.runningFrom.entity_source = "emp_existant";
+		} else {
+			result.runningFrom.entity = "new";
+		}
+
+		return result;
+	},
+
+    type: 'ManageIdentityOfferingsForBusinessServiceUIHelper'
+} );]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-17 18:23:04</sys_created_on>
+        <sys_id>b891125983b75210dbedb3a6feaad3df</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>ManageIdentityOfferingsForBusinessServiceUIHelper</sys_name>
+        <sys_package display_value="RBH customization" source="x_1610537_rbh_cust">054a89748373d610dbedb3a6feaad3d6</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="RBH customization">054a89748373d610dbedb3a6feaad3d6</sys_scope>
+        <sys_update_name>sys_script_include_b891125983b75210dbedb3a6feaad3df</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-17 18:23:04</sys_updated_on>
+    </sys_script_include>
+</record_update>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1610537_rbh_cust.ETN_Class_cmdb_ci_service</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>ETN_Class_cmdb_ci_service</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[gs.include( "ETN_Utils_Framework" );
+
+
+var ETN_Class_cmdb_ci_service = x_gamlp_obj_frwk.ETN_Class.create();
+
+ETN_Class_cmdb_ci_service.FILTER_REQUIRES = function( arr ) { return arr.filter( function( relation ) { return relation.Type.SysId == "a290f4ef477bce1097744049116d4363"; }, this ); };
+
+ETN_Class_cmdb_ci_service.prototype = 
+	x_gamlp_obj_frwk.ETN_Object.extendsObject( x_gamlp_obj_frwk.ETN_Class_cmdb_ci_service, {
+
+	offerings: function( filter, order ) {
+		return ETN_Class_service_offering.QUERY_WHERE_PARENT( this, filter ).getCollection( order );
+	},
+
+	requiredDependencies: function( filter ) {
+		return this.ciChildRelations( ETN_Class_cmdb_ci_service.FILTER_REQUIRES ).map( function( relation ) { return relation.Child; }, this );
+	},
+
+	generateApprouvers: function( previousApprouval, recursive ) {
+		recursive = ( typeof recursive === "undefined" ? false : recursive );
+		previousApprouval = ( typeof previousApprouval !== "undefined" ? previousApprouval : new Approuval() );
+
+		var approuversSysId = [];
+
+		if ( this.XGamlpIdmLcAccessApprovalProcess == "owner_or_delegate" ) {
+			if ( this.OwnedBy != "" && this.OwnedBy.Active ) {
+				approuversSysId.push( this.OwnedBy.SysId.toString() );
+			}
+
+			if ( this.UDelegue != "" && this.UDelegue.Active ) {
+				approuversSysId.push( this.UDelegue.SysId.toString() );
+				
+			} else if ( this.Parent != "" && this.Parent.UDelegue != "" && this.Parent.UDelegue.Active ) {
+				approuversSysId.push( this.Parent.UDelegue.SysId.toString() );
+			}
+
+			if ( approuversSysId.length > 0 ) {
+				previousApprouval.add( "Approbation du propriétaire", "ApprovesRejectsAnyU[" + approuversSysId.join( "," ).toString() + "]" );
+			}
+
+		} else if ( this.XGamlpIdmLcAccessApprovalProcess == "delegate" ) {
+			if ( this.UDelegue != "" && this.UDelegue.Active ) {
+				approuversSysId.push( this.UDelegue.SysId.toString() );
+				
+			} else if ( this.Parent != "" && this.Parent.UDelegue != "" && this.Parent.UDelegue.Active ) {
+				approuversSysId.push( this.Parent.UDelegue.SysId.toString() );
+			}
+
+			if ( approuversSysId.length > 0 ) {
+				previousApprouval.add( "Approbation du propriétaire", "ApprovesRejectsAnyU[" + approuversSysId.join( "," ).toString() + "]" );
+			}
+
+		} else if ( this.XGamlpIdmLcAccessApprovalProcess == "support_group" ) {
+			if ( this.SupportGroup != "" && this.SupportGroup.Active ) {
+				approuversSysId.push( this.UDelegue.SysId.toString() );
+				
+			} else if ( this.Parent != "" && this.Parent.SupportGroup != "" && this.Parent.SupportGroup.Active ) {
+				approuversSysId.push( this.Parent.SupportGroup.SysId.toString() );
+			}
+
+			if ( approuversSysId.length > 0 ) {
+				previousApprouval.add( "Approbation du groupe propriétaire", "ApprovesRejectsAnyG[" + approuversSysId.join( "," ).toString() + "]" );
+			}
+		}
+
+
+		if ( recursive ) {
+			this.Offerings().forEach( function( offering ) {
+				previousApprouval = offering.generateApprouvers( previousApprouval, recursive );
+			}, this );
+		}
+
+		return previousApprouval;
+	},
+
+	get type_scope() { return gs.getCurrentScopeName(); },
+    type: 'ETN_Class_cmdb_ci_service'
+} );]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-17 18:44:17</sys_created_on>
+        <sys_id>db669e1183f75210dbedb3a6feaad3db</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>ETN_Class_cmdb_ci_service</sys_name>
+        <sys_package display_value="RBH customization" source="x_1610537_rbh_cust">054a89748373d610dbedb3a6feaad3d6</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="RBH customization">054a89748373d610dbedb3a6feaad3d6</sys_scope>
+        <sys_update_name>sys_script_include_db669e1183f75210dbedb3a6feaad3db</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-17 18:44:17</sys_updated_on>
+    </sys_script_include>
+</record_update>

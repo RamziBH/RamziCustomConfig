@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="catalog_script_client">
+    <catalog_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_catalog>true</applies_catalog>
+        <applies_extended>false</applies_extended>
+        <applies_req_item>false</applies_req_item>
+        <applies_sc_task>false</applies_sc_task>
+        <applies_target_record>false</applies_target_record>
+        <applies_to>set</applies_to>
+        <cat_item/>
+        <cat_variable>IO:833ec21583b75210dbedb3a6feaad3ab</cat_variable>
+        <condition/>
+        <description/>
+        <field/>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>On Business Service Change Event</name>
+        <order/>
+        <published_ref/>
+        <script><![CDATA[function onChange( control, oldValue, newValue, isLoading ) {
+	console.info( "x_gamlp_idm_lc.On Business Service Change Event( " + oldValue + "/" + newValue + " )" );
+	// if ( isLoading ) {
+	// 	return;
+	// }
+
+	if ( newValue == '' ) {
+		console.info( "x_gamlp_idm_lc.On Business Service Change Event - clearing values" );
+		g_form.clearValue( "business_service_config" );
+	} else {
+		var _refreshBusinessService = function( businessService ) {
+			console.info( "x_gamlp_idm_lc.On Business Service Change Event._refreshBusinessService( " + businessService + " )" );
+
+			var _refreshBusinessServiceCallBack = function( response ) {
+				var answer = response.responseXML.documentElement.getAttribute( "answer" );
+				console.info( "x_gamlp_idm_lc.On Business Service Change Event._refreshBusinessServiceCallBack(): answer = " + answer );
+				var result = JSON.parse( answer );
+
+				if ( typeof result !== "undefined" && result.status.code == 0 ) {
+					g_form.setValue( "business_service_config", JSON.stringify( result.businessService ) );
+				} else {
+					console.warn( "x_gamlp_idm_lc.On Business Service Change Event._refreshIdentityCallBack() - error -> " + result.status.message.message.toString() );
+					g_form.addErrorMessage( "Business Service refresh error : " + result.status.message.message.toString() );
+				}
+			};
+
+			var ajax = new GlideAjax( 'x_1610537_rbh_cust.ManageIdentityOfferingsForBusinessServiceUIHelper' );
+			ajax.addParam( 'sysparm_name', 'getBusinessService' );
+			ajax.addParam( 'sysparm_business_service', businessService );
+			ajax.getXML( _refreshBusinessServiceCallBack );
+		};
+
+		_refreshBusinessService( newValue );
+	}
+
+}]]></script>
+        <sys_class_name>catalog_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-17 18:27:45</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>3e92de5983b75210dbedb3a6feaad3c7</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>On Business Service Change Event</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="RBH customization" source="x_1610537_rbh_cust">054a89748373d610dbedb3a6feaad3d6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="RBH customization">054a89748373d610dbedb3a6feaad3d6</sys_scope>
+        <sys_update_name>catalog_script_client_3e92de5983b75210dbedb3a6feaad3c7</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-17 18:32:59</sys_updated_on>
+        <table/>
+        <type>onChange</type>
+        <ui_type>10</ui_type>
+        <va_supported>true</va_supported>
+        <variable_set display_value="Manage an Identity Offerings for a Business Service - WIP">d1ad8e9183b75210dbedb3a6feaad3c5</variable_set>
+        <view/>
+    </catalog_script_client>
+</record_update>
