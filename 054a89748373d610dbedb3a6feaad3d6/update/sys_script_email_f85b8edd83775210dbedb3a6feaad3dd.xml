@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_email">
+    <sys_script_email action="INSERT_OR_UPDATE">
+        <name>hoc-set-planned-end-date</name>
+        <new_lines_to_html>false</new_lines_to_html>
+        <script><![CDATA[(function runMailScript( /* GlideRecord */ current, /* TemplatePrinter */ template,
+    /* Optional EmailOutbound */
+    email, /* Optional GlideRecord */ email_action,
+    /* Optional GlideRecord */
+    event) {
+
+    function formatDate(glideDate) {
+        var gdt = new GlideDateTime(glideDate);
+        var dateString = gdt.getDisplayValue();
+
+        var year = dateString.substring(0, 4);
+        var month = dateString.substring(5, 7);
+        var day = dateString.substring(8, 10);
+
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+        var jsDate = new Date(year, month - 1, day);
+        var formattedDate = gs.getMessage(daysOfWeek[jsDate.getDay()]) + ", " + gs.getMessage(months[month - 1]) + " " + parseInt(day, 10) + ", " + year;
+
+        return formattedDate;
+    }
+
+    var plannedStartDate = formatDate(current.getValue('end_date'));
+
+    template.print(plannedStartDate);
+
+})(current, template, email, email_action, event);]]></script>
+        <sys_class_name>sys_script_email</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-17 17:55:52</sys_created_on>
+        <sys_id>f85b8edd83775210dbedb3a6feaad3dd</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>hoc-set-planned-end-date</sys_name>
+        <sys_package display_value="RBH customization" source="x_1610537_rbh_cust">054a89748373d610dbedb3a6feaad3d6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="RBH customization">054a89748373d610dbedb3a6feaad3d6</sys_scope>
+        <sys_update_name>sys_script_email_f85b8edd83775210dbedb3a6feaad3dd</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-17 17:55:52</sys_updated_on>
+    </sys_script_email>
+</record_update>
