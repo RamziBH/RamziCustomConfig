@@ -4,7 +4,7 @@
         <misc>0</misc>
         <order>100</order>
         <published_ref/>
-        <question display_value="Location for installing the television (if selecting the Television item)">8a35f1c983331210dbedb3a6feaad3ed</question>
+        <question display_value="Emplacement où installer la télévision (si on choisit l'élément Télévision)">8a35f1c983331210dbedb3a6feaad3ed</question>
         <rec_misc>0</rec_misc>
         <sys_class_name>question_choice</sys_class_name>
         <sys_created_by>admin</sys_created_by>
