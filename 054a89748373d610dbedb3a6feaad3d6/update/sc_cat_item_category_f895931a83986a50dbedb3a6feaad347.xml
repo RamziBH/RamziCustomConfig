@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_category">
+    <sc_cat_item_category action="INSERT_OR_UPDATE">
+        <sc_cat_item display_value="Importer des lignes de dépense">ec955bd683986a50dbedb3a6feaad304</sc_cat_item>
+        <sc_category display_value="">cf5becd247fb461097744049116d4372</sc_category>
+        <sys_class_name>sc_cat_item_category</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-17 22:25:07</sys_created_on>
+        <sys_id>f895931a83986a50dbedb3a6feaad347</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>.Copy of Import Expense Lines</sys_name>
+        <sys_package display_value="RBH customization" source="x_1610537_rbh_cust">054a89748373d610dbedb3a6feaad3d6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="RBH customization">054a89748373d610dbedb3a6feaad3d6</sys_scope>
+        <sys_update_name>sc_cat_item_category_f895931a83986a50dbedb3a6feaad347</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-17 22:25:07</sys_updated_on>
+    </sc_cat_item_category>
+</record_update>

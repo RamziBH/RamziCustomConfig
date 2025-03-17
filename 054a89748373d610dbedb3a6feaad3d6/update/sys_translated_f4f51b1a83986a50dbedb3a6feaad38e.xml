@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_translated">
+    <sys_translated action="INSERT_OR_UPDATE">
+        <element>question_text</element>
+        <id/>
+        <label>Expense Count</label>
+        <language>fq</language>
+        <name>question</name>
+        <sys_class_name>sys_translated</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-17 22:26:46</sys_created_on>
+        <sys_id>f4f51b1a83986a50dbedb3a6feaad38e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Expense Count</sys_name>
+        <sys_package display_value="RBH customization" source="x_1610537_rbh_cust">054a89748373d610dbedb3a6feaad3d6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="RBH customization">054a89748373d610dbedb3a6feaad3d6</sys_scope>
+        <sys_update_name>sys_translated_f4f51b1a83986a50dbedb3a6feaad38e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-17 22:26:46</sys_updated_on>
+        <value>Expense Count</value>
+    </sys_translated>
+</record_update>

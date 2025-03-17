@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item">
+    <sc_cat_item action="INSERT_OR_UPDATE">
+        <access_type>restricted</access_type>
+        <active>true</active>
+        <availability>on_both</availability>
+        <billable>false</billable>
+        <category display_value="">cf5becd247fb461097744049116d4372</category>
+        <checked_out/>
+        <cost>0</cost>
+        <custom_cart/>
+        <delivery_plan/>
+        <delivery_plan_script/>
+        <delivery_time>1970-01-03 00:00:00</delivery_time>
+        <description><![CDATA[<p>Import expense lines to ServiceNow from an Excel file.</p>
+<p>Excel file must have 6 columns with as following:</p>
+<ul style="list-style-position: inside;"><li><span style="background-color: rgb(var(--sn-tinymce_content-background,var(--now-form-field--background-color,var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255))))); color: rgb(var(--sn-tinymce_content-text,var(--now-form-field--color,var(--now-color_text--primary,var(--now-color--neutral-18,22,27,28)))));">Cost plan</span></li><li><span style="background-color: rgb(var(--sn-tinymce_content-background,var(--now-form-field--background-color,var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255))))); color: rgb(var(--sn-tinymce_content-text,var(--now-form-field--color,var(--now-color_text--primary,var(--now-color--neutral-18,22,27,28)))));">Date</span></li><li><span style="background-color: rgb(var(--sn-tinymce_content-background,var(--now-form-field--background-color,var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255))))); color: rgb(var(--sn-tinymce_content-text,var(--now-form-field--color,var(--now-color_text--primary,var(--now-color--neutral-18,22,27,28)))));">Expense type</span></li><li><span style="background-color: rgb(var(--sn-tinymce_content-background,var(--now-form-field--background-color,var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255))))); color: rgb(var(--sn-tinymce_content-text,var(--now-form-field--color,var(--now-color_text--primary,var(--now-color--neutral-18,22,27,28)))));">Short description</span></li><li><span style="background-color: rgb(var(--sn-tinymce_content-background,var(--now-form-field--background-color,var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255))))); color: rgb(var(--sn-tinymce_content-text,var(--now-form-field--color,var(--now-color_text--primary,var(--now-color--neutral-18,22,27,28)))));">State</span></li></ul>
+<p><span style="background-color: rgb(var(--sn-tinymce_content-background,var(--now-form-field--background-color,var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255))))); color: rgb(var(--sn-tinymce_content-text,var(--now-form-field--color,var(--now-color_text--primary,var(--now-color--neutral-18,22,27,28)))));">The system will reject and cancel the import if any of the above conditions is not respected.</span></p>]]></description>
+        <display_price_property>non_zero</display_price_property>
+        <entitlement_script/>
+        <flow_designer_flow display_value="Data Automation  -  Import Expense Lines - auto">4e6a971283d86a50dbedb3a6feaad38a</flow_designer_flow>
+        <fulfillment_automation_level>unspecified</fulfillment_automation_level>
+        <group display_value="">43cabfa2db8a1d101c7c0ef2e29619ba</group>
+        <hide_sp>false</hide_sp>
+        <icon/>
+        <ignore_price>true</ignore_price>
+        <image/>
+        <location/>
+        <make_item_non_conversational>false</make_item_non_conversational>
+        <mandatory_attachment>true</mandatory_attachment>
+        <meta>sap,financial,import,expense lines,expenses,expense,financière,lignes de dépense,dépenses,dépense,Importer </meta>
+        <mobile_hide_price>false</mobile_hide_price>
+        <mobile_picture/>
+        <mobile_picture_type>use_desktop_picture</mobile_picture_type>
+        <model/>
+        <name>Copy of Import Expense Lines</name>
+        <no_attachment_v2>false</no_attachment_v2>
+        <no_cart>false</no_cart>
+        <no_cart_v2>true</no_cart_v2>
+        <no_delivery_time_v2>true</no_delivery_time_v2>
+        <no_order>false</no_order>
+        <no_order_now>false</no_order_now>
+        <no_proceed_checkout>false</no_proceed_checkout>
+        <no_quantity>false</no_quantity>
+        <no_quantity_v2>true</no_quantity_v2>
+        <no_save_as_draft>false</no_save_as_draft>
+        <no_search>false</no_search>
+        <no_wishlist_v2>true</no_wishlist_v2>
+        <omit_price>false</omit_price>
+        <order>0</order>
+        <ordered_item_link/>
+        <owner display_value="">8832d17587bbad507f7d20e5cebb3548</owner>
+        <picture/>
+        <preview>JavaScript: popupOpenStandard("com.glideapp.servicecatalog_cat_item_view.do?v=1&amp;sysparm_id=ec955bd683986a50dbedb3a6feaad304&amp;sysparm_preview=true", "summary");</preview>
+        <price>0</price>
+        <published_ref/>
+        <recurring_frequency/>
+        <recurring_price>0</recurring_price>
+        <request_method>submit</request_method>
+        <roles/>
+        <sc_catalogs>e0d08b13c3330100c8b837659bba8fb4</sc_catalogs>
+        <sc_ic_item_staging/>
+        <sc_ic_version/>
+        <sc_template/>
+        <short_description>Copy of Import expense lines</short_description>
+        <show_variable_help_on_load>false</show_variable_help_on_load>
+        <start_closed>false</start_closed>
+        <state/>
+        <sys_class_name>sc_cat_item</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-17 22:25:07</sys_created_on>
+        <sys_id>ec955bd683986a50dbedb3a6feaad304</sys_id>
+        <sys_mod_count>15</sys_mod_count>
+        <sys_name>Importer des lignes de dépense</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="RBH customization">054a89748373d610dbedb3a6feaad3d6</sys_scope>
+        <sys_update_name>sc_cat_item_ec955bd683986a50dbedb3a6feaad304</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-17 22:47:29</sys_updated_on>
+        <taxonomy_topic/>
+        <template/>
+        <template_manager_roles/>
+        <type>item</type>
+        <use_sc_layout>true</use_sc_layout>
+        <vendor/>
+        <version>61</version>
+        <visible_bundle>true</visible_bundle>
+        <visible_guide>true</visible_guide>
+        <visible_standalone>true</visible_standalone>
+        <workflow/>
+    </sc_cat_item>
+    <sys_translated_text action="delete_multiple" query="documentkey=ec955bd683986a50dbedb3a6feaad304"/>
+    <sys_translated_text action="INSERT_OR_UPDATE">
+        <documentkey>ec955bd683986a50dbedb3a6feaad304</documentkey>
+        <fieldname>description</fieldname>
+        <language>fq</language>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-17 22:25:07</sys_created_on>
+        <sys_id>2895931a83986a50dbedb3a6feaad33e</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-17 22:25:08</sys_updated_on>
+        <tablename>sc_cat_item</tablename>
+        <value>&lt;p&gt;Importer des lignes de d&amp;eacute;pense &amp;agrave; ServiceNow &amp;agrave; partir d'un fichier Excel (xlsx).&lt;/p&gt;&#13;
+&lt;p&gt;Le fichier doit avoir des colonnes suivantes&lt;/p&gt;&#13;
+&lt;ul style="list-style-position: inside;"&gt;&#13;
+&lt;li&gt;&lt;span style="background-color: rgb(var(--sn-tinymce_content-background,var(--now-form-field--background-color,var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255))))); color: rgb(var(--sn-tinymce_content-text,var(--now-form-field--color,var(--now-color_text--primary,var(--now-color--neutral-18,22,27,28)))));"&gt;&lt;strong&gt;Cost plan&lt;/strong&gt; : Nom de plan de co&amp;ucirc;t. Le plan de co&amp;ucirc;t doit exister dans ServiceNow&lt;/span&gt;&lt;/li&gt;&#13;
+&lt;li&gt;&lt;span style="background-color: rgb(var(--sn-tinymce_content-background,var(--now-form-field--background-color,var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255))))); color: rgb(var(--sn-tinymce_content-text,var(--now-form-field--color,var(--now-color_text--primary,var(--now-color--neutral-18,22,27,28)))));"&gt;&lt;strong&gt;Amount &lt;/strong&gt;: le montant de la ligne de d&amp;eacute;pense. Le format de cette colonne doit &amp;ecirc;tre G&amp;eacute;n&amp;eacute;rale et pas Num&amp;eacute;rique&lt;/span&gt;&lt;/li&gt;&#13;
+&lt;li&gt;&lt;span style="background-color: rgb(var(--sn-tinymce_content-background,var(--now-form-field--background-color,var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255))))); color: rgb(var(--sn-tinymce_content-text,var(--now-form-field--color,var(--now-color_text--primary,var(--now-color--neutral-18,22,27,28)))));"&gt;&lt;strong&gt;Date &lt;/strong&gt;: la date du d&amp;eacute;pense en format&amp;nbsp; mm/jj/aaaa&lt;/span&gt;&lt;/li&gt;&#13;
+&lt;li&gt;&lt;span style="background-color: rgb(var(--sn-tinymce_content-background,var(--now-form-field--background-color,var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255))))); color: rgb(var(--sn-tinymce_content-text,var(--now-form-field--color,var(--now-color_text--primary,var(--now-color--neutral-18,22,27,28)))));"&gt;&lt;strong&gt;Expense type &lt;/strong&gt;: Capex ou Opex&lt;/span&gt;&lt;/li&gt;&#13;
+&lt;li&gt;&lt;span style="background-color: rgb(var(--sn-tinymce_content-background,var(--now-form-field--background-color,var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255))))); color: rgb(var(--sn-tinymce_content-text,var(--now-form-field--color,var(--now-color_text--primary,var(--now-color--neutral-18,22,27,28)))));"&gt;&lt;strong&gt;Short description&lt;/strong&gt; : Nom de la ligne de d&amp;eacute;pense&lt;/span&gt;&lt;/li&gt;&#13;
+&lt;li&gt;&lt;span style="background-color: rgb(var(--sn-tinymce_content-background,var(--now-form-field--background-color,var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255))))); color: rgb(var(--sn-tinymce_content-text,var(--now-form-field--color,var(--now-color_text--primary,var(--now-color--neutral-18,22,27,28)))));"&gt;&lt;strong&gt;State&lt;/strong&gt; : Pending&lt;/span&gt;&lt;/li&gt;&#13;
+&lt;/ul&gt;&#13;
+&lt;p&gt;La demande sera annul&amp;eacute;e par le syst&amp;egrave;me d&amp;egrave;s qu'une des conditions si dessus n'est pas respect&amp;eacute;e.&lt;/p&gt;&#13;
+&lt;p&gt;Veuillez consulter le &lt;a title="Guide d'importation les donn&amp;eacute;es financi&amp;egrave;res &amp;agrave; ServiceNow" href="https://energir.sharepoint.com/sites/TI-Equipe-Gestion-De-Collaboration/Documents partages/Plateforme ServiceNow/Documentation/R&amp;eacute;cit-specs/../../../../../../:x:/r/sites/TI-Bureau-Projets-Internes/Documents%20partages/General/Contr%C3%B4les/_Processus%20%26%20Proc%C3%A9dures/Gestion%20financi%C3%A8re/%C3%80%20venir%20-%20Guide%20import%20r%C3%A9el%20SAP%20vers%20SNow.xlsx?d=w90ce9f83d0094dda968ecf0f4248b3d7&amp;amp;csf=1&amp;amp;web=1&amp;amp;e=QdmQyd" target="_blank" rel="noopener"&gt;Guide d'importation les donn&amp;eacute;es financi&amp;egrave;res &amp;agrave; ServiceNow&lt;/a&gt;.&lt;/p&gt;</value>
+    </sys_translated_text>
+    <sys_translated_text action="INSERT_OR_UPDATE">
+        <documentkey>ec955bd683986a50dbedb3a6feaad304</documentkey>
+        <fieldname>name</fieldname>
+        <language>fq</language>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-17 22:25:07</sys_created_on>
+        <sys_id>e8955bd683986a50dbedb3a6feaad308</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-17 22:25:15</sys_updated_on>
+        <tablename>sc_cat_item</tablename>
+        <value>Importer des lignes de dépense</value>
+    </sys_translated_text>
+    <sys_translated_text action="INSERT_OR_UPDATE">
+        <documentkey>ec955bd683986a50dbedb3a6feaad304</documentkey>
+        <fieldname>short_description</fieldname>
+        <language>fq</language>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-17 22:25:07</sys_created_on>
+        <sys_id>6895931a83986a50dbedb3a6feaad33b</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-17 22:27:54</sys_updated_on>
+        <tablename>sc_cat_item</tablename>
+        <value> Importer des lignes de dépense à partir d'un fichier Excel</value>
+    </sys_translated_text>
+    <fx_price action="delete_multiple" query="id=ec955bd683986a50dbedb3a6feaad304"/>
+    <fx_price action="INSERT_OR_UPDATE">
+        <amount>0</amount>
+        <currency display_value="EUR">EUR</currency>
+        <field>price</field>
+        <id>ec955bd683986a50dbedb3a6feaad304</id>
+        <parent/>
+        <reference_amount>0</reference_amount>
+        <reference_currency display_value="USD">USD</reference_currency>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-17 22:25:07</sys_created_on>
+        <sys_id>28955bd683986a50dbedb3a6feaad307</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-17 22:25:08</sys_updated_on>
+        <table>sc_cat_item</table>
+        <type>calculated</type>
+    </fx_price>
+    <fx_price action="INSERT_OR_UPDATE">
+        <amount>0</amount>
+        <currency display_value="EUR">EUR</currency>
+        <field>recurring_price</field>
+        <id>ec955bd683986a50dbedb3a6feaad304</id>
+        <parent/>
+        <reference_amount>0</reference_amount>
+        <reference_currency display_value="USD">USD</reference_currency>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-17 22:25:07</sys_created_on>
+        <sys_id>2495931a83986a50dbedb3a6feaad339</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-17 22:25:08</sys_updated_on>
+        <table>sc_cat_item</table>
+        <type>calculated</type>
+    </fx_price>
+</record_update>
