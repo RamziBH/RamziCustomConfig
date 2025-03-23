@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1610537_rbh_cust.Energir_ImportationSAPS4</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>Energir_ImportationSAPS4</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var Energir_ImportationSAPS4 = Class.create();
+
+Energir_ImportationSAPS4.prototype = {
+    initialize: function() {},
+
+    importerAll: function() {
+        gs.log('Energir_ImportationSAPS4: importerStructOrg()');
+        this.importerStructOrg();
+
+        gs.log('Energir_ImportationSAPS4: importerEmployesSAP()');
+        this.importerEmployesSAP();
+		
+		gs.log('Energir_ImportationSAPS4: setMAJUserInactifs()');
+        this.setMAJUserInactifs();
+		
+		gs.log('Energir_ImportationSAPS4: setMAJUsers()');
+        this.setMAJUsers();
+
+        gs.log('Energir_ImportationSAPS4: setMAJUserChangesetHierarchie()');
+        this.setMAJUserChangesetHierarchie();
+
+		gs.log('Energir_ImportationSAPS4: setHierarchie()');
+        this.setHierarchie();
+
+        gs.log('Energir_ImportationSAPS4: setHierarchieDept()');
+        this.setHierarchieDept();
+    },
+
+///////////////// importerStructOrg
+    importerStructOrg: function() {
+        try {
+            var r = new sn_ws.RESTMessageV2('SAP S4 - Structure Organisationnelle', 'get');
+            r.setEccParameter('skip_sensor', 'true');
+            r.setHttpTimeout(1800000); // ms
+            var response = r.execute();
+            response.waitForResponse(1800); // sec
+            var responseBody = response.getBody();
+            gs.log('Importation SAP Job - importerStructOrg : ' + responseBody);
+            var httpStatus = response.getStatusCode();
+            var helper = new XMLHelper(responseBody);
+            var obj = helper.toObject();
+            this.logStructObj(obj);
+			gs.log('Importation SAP Job - importerStructOrg() - Terminé');	
+        } catch (ex) {
+            gs.log('Importation SAP Job - importerStructOrg() - (ERROR) : ' + ex.getMessage());
+        }
+
+    },
+
+///////////////// importerEmployesSAP
+	importerEmployesSAP: function() {
+        try {
+            var i = 0;
+            var r = new sn_ws.RESTMessageV2('SAP S4 - Employes', 'get');
+            r.setEccParameter('skip_sensor', 'true');
+            r.setHttpTimeout(1800000); // ms
+            var response = r.execute();
+            response.waitForResponse(1800); // sec
+            var responseBody = response.getBody();
+            gs.log('Importation SAP Job - importerEmployesSAP : ' + responseBody);
+            var httpStatus = response.getStatusCode();
+            var helper = new XMLHelper(responseBody);
+            var helperObj = helper.toObject();
+            this.logEmpObj(helperObj);
+            gs.log('Importation SAP Job - importerEmployesSAP() - Terminé');
+        } catch (ex) {
+            gs.log('Importation SAP Job - importerEmployesSAP() - (ERROR) : ' + ex.getMessage());
+        }
+    },
+
+///////////////// logEmpObj
+    logEmpObj: function(obj) {
+		gs.log('Importation SAP Job - logEmpObj() - Début');		
+        for (var x in obj) {
+            if (x == "m:properties") {
+                this.loadEmpProperties(obj[x]);
+            }
+            this.logEmpObj(obj[x]);
+        }
+		gs.log('Importation SAP Job - logEmpObj() - Terminé');			
+    },
+///////////////// loadEmpProperties
+    loadEmpProperties: function(obj) {
+		gs.log('Importation SAP Job - loadEmpProperties() - Début');			
+        var codeUsager;
+        var nom;
+        var prenom;
+        var secteur;
+        var codeEmploi;
+        var codeSup;
+        var consultant;
+        var centreCout;
+        var inactif;
+
+        for (var x in obj) {
+            if (x == "d:codeUsager")
+                codeUsager = obj[x];
+            if (x == "d:nom")
+                nom = obj[x];
+            if (x == "d:prenom")
+                prenom = obj[x];
+            if (x == "d:secteur")
+                secteur = obj[x];
+            if (x == "d:codeObjet")
+                codeEmploi = obj[x];
+            if (x == "d:centreCout")
+                centreCout = obj[x];
+            if (x == "d:codeSup")
+                codeSup = obj[x];
+            if (x == "d:consultant")
+                consultant = obj[x];
+            if (x == "d:inactif")
+                inactif = obj[x];
+        }
+
+        var gr = new GlideRecord("sys_user");
+        gr.addQuery('user_name', codeUsager);
+        gr.query();
+        if (gr.next()) {
+            gr.department = this.getDepartement(secteur);
+            if (centreCout != null) {
+                var cc = centreCout.substring(5, 10);
+                gr.setDisplayValue('cost_center', cc);
+            }
+            gs.log('Importation SAP Job - loadEmpProperties ' + gr.name + ' / ' + codeSup + ' / ' + consultant); //New log
+            if (codeSup != '' && consultant != 'X') //New code
+            {
+                var gr_parent = new GlideRecord("sys_user");
+                gr_parent.addQuery('user_name', codeSup);
+                gr_parent.query();
+                if (gr_parent.next())
+                    gr.manager = gr_parent.sys_id;
+            }
+            gr.u_internal_employee = (consultant != 'X');
+            //Niveau hierarchique
+            if (codeEmploi != null)
+                gr.u_niveau_hierarchique = codeEmploi.substring(0, 4);
+            //gr.active = (inactif != 'X'); // Pour un test des désactivation avec FRNX et ENT
+            gr.update();
+        }
+		gs.log('Importation SAP Job - loadEmpProperties() - Terminé');		
+    },
+
+///////////////// logStructObj
+    logStructObj: function(obj) {
+		gs.log('Importation SAP Job - logStructObj() - Début');
+        for (var x in obj) {
+            if (x == "m:properties") {
+                this.loadStructOrgProperties(obj[x]);
+            }
+            this.logStructObj(obj[x]);
+        }
+		gs.log('Importation SAP Job - logStructObj() - Terminé');
+    },
+
+///////////////// loadStructOrgProperties
+    loadStructOrgProperties: function(obj) {
+		gs.log('Importation SAP Job - loadStructOrgProperties() - Début');
+        var u_nostruc;
+        var u_secteur;
+        var u_niveauhier;
+        var u_noSuper;
+        var u_description;
+        var u_gestionnaire;
+
+        for (var x in obj) {
+            if (x == "d:noStruc")
+                u_nostruc = obj[x];
+            if (x == "d:secteur")
+                u_secteur = obj[x];
+            if (x == "d:niveauHier")
+                u_niveauhier = obj[x];
+            if (x == "d:noSuper")
+                u_noSuper = obj[x];
+            if (x == "d:description")
+                u_description = obj[x];
+            if (x == "d:gestionnaire")
+                u_gestionnaire = obj[x];
+        }
+
+        var gr = new GlideRecord("cmn_department");
+        gr.addQuery('id', u_secteur);
+        gr.query();
+        if (gr.next()) {
+            gr.u_sap_id = u_nostruc;
+            gr.u_hierarchie_sap = u_niveauhier;
+            gr.dept_head = u_gestionnaire;
+            if (u_noSuper > 0) {
+                var gr_parent = new GlideRecord("cmn_department");
+                gr_parent.addQuery('u_sap_id', u_noSuper);
+				gr_parent.orderByDesc('sys_updated_on');
+                gr_parent.query();
+                if (gr_parent.next())
+                    gr.parent = gr_parent.sys_id;
+            }
+            gr.name = u_description;
+            gr.update();
+        } else {
+            gr.id = u_secteur;
+            gr.u_sap_id = u_nostruc;
+            gr.u_hierarchie_sap = u_niveauhier;
+            gr.name = u_description;
+            gr.dept_head = u_gestionnaire;
+            if (u_noSuper > 0) {
+                var gr_parent2 = new GlideRecord("cmn_department");
+                gr_parent2.addQuery('u_sap_id', u_noSuper);
+                gr_parent2.query();
+                if (gr_parent2.next())
+                    gr.parent = gr_parent2.sys_id;
+            }
+            gr.insert();
+        }
+       gs.log('Importation SAP Job - loadStructOrgProperties() - Terminé');
+    },
+///////////////// getDepartement
+    getDepartement: function(secteur) {
+        var answer = '';
+        var gr = new GlideRecord("cmn_department");
+        gr.addQuery('id', secteur);
+        gr.query();
+        if (gr.next())
+            answer = gr.sys_id;
+        return answer;
+    },
+	
+///////////////// setMAJUserInactifs
+    setMAJUserInactifs: function() {
+		gs.log('Importation SAP Job - setMAJUserInactifs() - Début');
+		var count = 0;
+		var grSysAudit = new GlideRecord('sys_audit');
+		grSysAudit.addEncodedQuery("tablename=sys_user^fieldname=active^newvalue=0^sys_created_onONToday@javascript:gs.beginningOfToday()@javascript:gs.endOfToday()");
+		grSysAudit.query();
+		while (grSysAudit.next()) {
+			var userModif = grSysAudit.getValue('documentkey');
+			var grSysUser = new GlideRecord('sys_user');
+			grSysUser.addEncodedQuery("active=true^u_vp=" + userModif + "^ORu_directeur_superieur=" + userModif + "^ORu_chef_service=" + userModif + "^ORmanager=" + userModif + '"');
+			grSysUser.query();
+			while (grSysUser.next()) {
+			if (grSysUser.manager == userModif) {
+				grSysUser.setValue('manager', "");
+				grSysUser.update();
+				}
+			if (grSysUser.u_chef_service == userModif) {
+				grSysUser.setValue('u_chef_service', "");
+				grSysUser.update();
+				}
+			if (grSysUser.u_directeur_superieur == userModif) {
+				grSysUser.setValue('u_directeur_superieur', "");
+				grSysUser.update();
+				}
+			if (grSysUser.u_vp == userModif) {
+				grSysUser.setValue('u_vp', "");
+				grSysUser.update();
+				}
+               
+            }
+        }
+	gs.log('Importation SAP Job - setMAJUserInactifs() - Terminé');
+    },
+	
+///////////////// setMAJUser
+    setMAJUsers: function() {
+		gs.log('Importation SAP Job - setMAJUsers() - Début');
+        var grSysAudit = new GlideRecord('sys_audit');
+	grSysAudit.addEncodedQuery("fieldname=department^ORfieldname=u_niveau_hierarchique^sys_created_onONToday@javascript:gs.beginningOfToday()@javascript:gs.endOfToday()^tablename=sys_user");
+        grSysAudit.query();
+        while (grSysAudit.next()) {
+            if (grSysAudit.getValue('oldvalue') != grSysAudit.getValue('newvalue')) {
+                var grSysUser = new GlideRecord('sys_user');
+                grSysUser.addQuery("sys_id", grSysAudit.getValue('documentkey'));
+                grSysUser.query();
+                while (grSysUser.next()) {
+                   // grSysUser.setValue('manager', "");
+                    grSysUser.setValue('u_chef_service', "");
+                    grSysUser.setValue('u_directeur_superieur', "");
+                    grSysUser.setValue('u_vp', "");
+                    grSysUser.update();
+                }
+                
+            }
+        }
+		gs.log('Importation SAP Job - setMAJUsers() - Terminé');
+    },
+///////////////// setMAJUserChangesetHierarchie
+    setMAJUserChangesetHierarchie: function() {
+        gs.log('Importation SAP Job - setMAJUserChangesetHierarchie() - Début');
+        //////////////////////////
+        var grSysAudit = new GlideRecord('sys_audit');
+        grSysAudit.addEncodedQuery("sys_created_onONToday@javascript:gs.beginningOfToday()@javascript:gs.endOfToday()^tablename=sys_user^fieldname=u_niveau_hierarchique");
+        grSysAudit.query();
+        while (grSysAudit.next()) {
+            var doc = grSysAudit.getValue('documentkey');
+            var newv = grSysAudit.getValue('newvalue');
+            var oldv = grSysAudit.getValue('oldvalue');
+            var grSysUser = new GlideRecord('sys_user');
+
+            /////// Chef de services
+            if (oldv == 'RCSE') {
+                grSysUser.addQuery("u_chef_service.sys_id", doc);
+                grSysUser.query();
+                while (grSysUser.next()) {
+                    gs.log('Importation SAP - setMAJUserChangesetHierarchie - RCSE : ' + grSysUser.getValue('name'));
+                    grSysUser.u_chef_service = "";
+                    grSysUser.update();
+                }
+            }
+            /////// Directeur	
+            if (oldv == 'RCDI') {
+                grSysUser.addQuery("u_directeur_superieur.sys_id", doc);
+                grSysUser.query();
+                while (grSysUser.next()) {
+                    gs.log('Importation SAP - setMAJUserChangesetHierarchie - RCDI : ' + grSysUser.getValue('name'));
+                    grSysUser.u_directeur_superieur = "";
+                    grSysUser.update();
+                }
+            }
+
+            /////// Vice président	
+            if (oldv == 'RCVP' || oldv == 'RCEX') {
+                grSysUser.addQuery("u_vp.sys_id", doc);
+                grSysUser.query();
+                while (grSysUser.next()) {
+                    gs.log('Importation SAP - setMAJUserChangesetHierarchie - RCVP/RCEX : ' + grSysUser.getValue('name'));
+                    grSysUser.u_vp = "";
+                    grSysUser.update();
+                }
+            }
+        }
+        gs.log('Importation SAP Job - setMAJUserChangesetHierarchie() - Terminé');
+    },
+///////////////// setHierarchie
+    setHierarchie: function() {
+        //VP's
+        var gr = new GlideRecord("sys_user");
+        gr.addEncodedQuery('active=true^manager.u_niveau_hierarchiqueINRCVP,RCEX');
+        gr.query();
+        while (gr.next()) {
+            if (gr.manager.active == true) {
+                gr.u_vp = gr.manager;
+            } else
+                gr.u_vp = "";
+
+            gr.update();
+        }
+
+        //Directeurs
+        var grDir = new GlideRecord("sys_user");
+        grDir.addEncodedQuery('active=true^manager.u_niveau_hierarchiqueINRCDI');
+        grDir.query();
+        while (grDir.next()) {
+            if (grDir.manager.active == true) {
+                grDir.u_directeur_superieur = grDir.manager;
+            } else
+                grDir.u_directeur_superieur = "";
+
+            if (grDir.manager.u_vp.active == true) {
+                grDir.u_vp = grDir.manager.u_vp;
+            } else
+                grDir.u_vp = "";
+
+            grDir.update();
+        }
+
+        //Chefs de service
+        var grCD = new GlideRecord("sys_user");
+        grCD.addEncodedQuery('active=true^manager.u_niveau_hierarchiqueINRCSE');
+        grCD.query();
+        while (grCD.next()) {
+            if (grCD.manager.active == true) {
+                grCD.u_chef_service = grCD.manager;
+            } else
+                grCD.u_chef_service = "";
+
+            if (grCD.manager.u_directeur_superieur.active == true) {
+                grCD.u_directeur_superieur = grCD.manager.u_directeur_superieur;
+            } else
+                grCD.u_directeur_superieur = "";
+
+            if (grCD.manager.u_vp.active == true) { //manager.u_vp.active=true
+                grCD.u_vp = grCD.manager.u_vp;
+            } else
+                grCD.u_vp = "";
+
+            grCD.update();
+        }
+
+        //Conseillers principaux
+        var grCP = new GlideRecord("sys_user");
+        grCP.addEncodedQuery('active=true^manager.u_niveau_hierarchiqueINRCSU,RCGR');
+        grCP.query();
+        while (grCP.next()) {
+            if (grCP.manager.u_chef_service.active == true) {
+                grCP.u_chef_service = grCP.manager.u_chef_service;
+            } else
+                grCP.u_chef_service = "";
+
+            if (grCP.manager.u_directeur_superieur.active == true) {
+                grCP.u_directeur_superieur = grCP.manager.u_directeur_superieur;
+            } else
+                grCP.u_directeur_superieur = "";
+
+            if (grCP.manager.u_vp.active == true) {
+                grCP.u_vp = grCP.manager.u_vp;
+            } else
+                grCP.u_vp = "";
+
+            grCP.update();
+        }
+
+        gs.log('Importation SAP Job - setHierarchie() complété avec succès! ');
+    },
+///////////////// setHierarchieDept
+    setHierarchieDept: function() {
+        //Ajustement des secteurs
+        var grSec = new GlideRecord("cmn_department");
+        grSec.addQuery("u_hierarchie_sap", 3);
+        grSec.query();
+        while (grSec.next()) {
+            grSec.u_secteur = grSec.parent;
+            grSec.update();
+        }
+
+        //Ajustement des directions
+        var grDire = new GlideRecord("cmn_department");
+        grDire.addQuery("u_hierarchie_sap", 4);
+        grDire.query();
+        while (grDire.next()) {
+            grDire.u_secteur = grDire.parent.u_secteur;
+            grDire.u_direction = grDire.parent;
+            grDire.update();
+        }
+
+        //Ajustement des autres département
+        var grDept = new GlideRecord("cmn_department");
+        grDept.addQuery("u_hierarchie_sap", ">", 4);
+        grDept.query();
+        while (grDept.next()) {
+            grDept.u_secteur = grDept.parent.u_secteur;
+            grDept.u_direction = grDept.parent.u_direction;
+            grDept.update();
+        }
+        gs.log('Importation SAP Job - setHierarchieDept() complété avec succès! ');
+    },
+
+    type: 'Energir_ImportationSAPS4'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-23 17:09:10</sys_created_on>
+        <sys_id>ab960914832ca290dbedb3a6feaad3a4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Energir_ImportationSAPS4</sys_name>
+        <sys_package display_value="RBH customization" source="x_1610537_rbh_cust">054a89748373d610dbedb3a6feaad3d6</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="RBH customization">054a89748373d610dbedb3a6feaad3d6</sys_scope>
+        <sys_update_name>sys_script_include_ab960914832ca290dbedb3a6feaad3a4</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-23 17:09:10</sys_updated_on>
+    </sys_script_include>
+</record_update>
