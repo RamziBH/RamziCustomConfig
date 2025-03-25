@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sysevent_email_template">
+    <sysevent_email_template action="INSERT_OR_UPDATE">
+        <collection>sysapproval_approver</collection>
+        <email_layout/>
+        <message/>
+        <message_html><![CDATA[<div>
+<p>${mail_script:gazmet.email.Template}</p>
+<p><span style="color: #004070; font-size: 12pt;"><em><strong>Demande informatique &ndash; Centre de services TI</strong></em></span></p>
+<p><em><strong><span style="color: #004070;"><span style="font-size: 10pt;">Rappel d'une demande d'approbation pour : ${URI_REF}</span></span></strong></em></p>
+<p><span style="color: #000000;">Bonjour,&nbsp;</span></p>
+<p><span style="color: #000000;">Une demande d'approbation est en attente de votre part depuis plus de 7 jours.&nbsp;R&eacute;f&eacute;rez-vous aux informations&nbsp;ci-dessous pour &eacute;valuer la demande.&nbsp;</span></p>
+<p>Afin d&rsquo;am&eacute;liorer la qualit&eacute; de livraison des services TI, ce courriel de relance vous sera envoy&eacute; toutes les semaines jusqu'&agrave; ce que vous approuviez ou refusiez cette demande.</p>
+<div><span style="color: #000000;">Cliquez sur ce lien pour <strong>approuver</strong> la demande:</span> ${mailto:mailto.approval}</div>
+<div><span style="color: #000000;">Cliquez sur ce lien pour <strong>refuser</strong> la demande:</span> ${mailto:mailto.rejection}</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<table style="border: 1px dashed #bbbbbb;" width="100%">
+<tbody>
+<tr style="background-color: #004070;"><th style="color: #ffffff; text-align: left;" colspan="2">Informations de la demande</th></tr>
+<tr>
+<td style="border: 1px dashed #bbbbbb;"><strong>Demandeur</strong></td>
+<td style="border: 1px dashed #bbbbbb;"><span style="color: #000000;">${sysapproval.request.requested_for}</span></td>
+</tr>
+<tr>
+<td style="border: 1px dashed #bbbbbb;"><strong>Statut</strong></td>
+<td style="border: 1px dashed #bbbbbb;"><span style="color: #000000;">${state}</span></td>
+</tr>
+<tr>
+<td style="border: 1px dashed #bbbbbb;"><strong>Sommaire</strong></td>
+<td style="border: 1px dashed #bbbbbb;"><span style="color: #000000;">${sysapproval.short_description}</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div>&nbsp;</div>
+<div>
+<table style="border: 1px dashed #bbbbbb;" width="100%">
+<tbody>
+<tr style="background-color: #004070;"><th style="color: #ffffff; text-align: left;" colspan="2">D&eacute;tails additionnels</th></tr>
+<tr>
+<td style="border: 1px dashed #bbbbbb;" colspan="2">
+<p>${mail_script:gm.Item.Approbation.Variable}</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+</div>
+<div>${mail_script:gm.addURL.LibreServcieCSTI}</div>]]></message_html>
+        <message_list/>
+        <message_text/>
+        <name>item.approval.reminder</name>
+        <sms_alternate/>
+        <subject>Rappel - Demande d'approbation pour ${sysapproval}</subject>
+        <sys_class_name>sysevent_email_template</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-25 14:56:29</sys_created_on>
+        <sys_id>329bba74832c6690dbedb3a6feaad304</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>item.approval.reminder</sys_name>
+        <sys_package display_value="RBH customization" source="x_1610537_rbh_cust">054a89748373d610dbedb3a6feaad3d6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="RBH customization">054a89748373d610dbedb3a6feaad3d6</sys_scope>
+        <sys_update_name>sysevent_email_template_329bba74832c6690dbedb3a6feaad304</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-25 14:56:29</sys_updated_on>
+        <sys_version>2</sys_version>
+    </sysevent_email_template>
+</record_update>
