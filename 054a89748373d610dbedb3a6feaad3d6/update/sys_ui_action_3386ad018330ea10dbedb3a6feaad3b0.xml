@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_action">
+    <sys_ui_action action="INSERT_OR_UPDATE">
+        <action_name/>
+        <active>true</active>
+        <client>false</client>
+        <client_script_v2><![CDATA[function onClick(g_form) {
+
+}]]></client_script_v2>
+        <comments/>
+        <condition>current. u_stage == "Ready for Shipping" </condition>
+        <form_action>true</form_action>
+        <form_button>true</form_button>
+        <form_button_v2>false</form_button_v2>
+        <form_context_menu>false</form_context_menu>
+        <form_link>false</form_link>
+        <form_menu_button_v2>false</form_menu_button_v2>
+        <form_style/>
+        <format_for_configurable_workspace>false</format_for_configurable_workspace>
+        <hint/>
+        <isolate_script>false</isolate_script>
+        <list_action>false</list_action>
+        <list_banner_button>false</list_banner_button>
+        <list_button>false</list_button>
+        <list_choice>false</list_choice>
+        <list_context_menu>false</list_context_menu>
+        <list_link>false</list_link>
+        <list_save_with_form_button>false</list_save_with_form_button>
+        <list_style/>
+        <messages/>
+        <name>Shipped</name>
+        <onclick/>
+        <order>100</order>
+        <script><![CDATA[var checkdelivery = new x_hccc_cotl.Hoc_CotlUtils().checkReadyForShipping(current.worksheet, "u_stage=^ORu_stage=preparation^worksheet=", 0);
+  var shippingrecord = new x_hccc_cotl.Hoc_CotlUtils().cotlrecordcheck(current,"x_hccc_cotl_shipping");
+  var schedulerecord = new x_hccc_cotl.Hoc_CotlUtils().cotlrecordcheck(current,"x_hccc_cotl_colited_scheduled");
+
+  var conditionrelatedlist = (!shippingrecord && !schedulerecord) || current.task_type == 'Telephony' ;
+//var conditionrelatedlist = (!shippingrecord) || current.task_type == 'Telephony' ;
+  if ((checkdelivery == 'Yes' || current.u_override_shipping) && (conditionrelatedlist)) {
+      current.setValue('u_stage', 'shipped');
+  }
+
+  if (checkdelivery == 'No' && current.u_override_shipping == false) {
+      gs.addErrorMessage('At least one task is not ready for shipped.');
+  }
+
+  var worksheetstate = new x_hccc_cotl.Hoc_CotlUtils().checkReadyForShipping(current.worksheet, "u_stageINpreparation,Ready for Shipping^worksheet=", 1);
+  if (worksheetstate == 'Yes' && conditionrelatedlist) {
+      var works = new GlideRecord('x_hccc_cotl_worksheet');
+      if (works.get(current.worksheet.sys_id)) {
+          works.stage = 'shipped';
+          works.update();
+      } else {
+          gs.addErrorMessage('Worksheet not found: ' + current.worksheet.sys_id);
+      }
+
+  }
+
+
+  if ((shippingrecord == true) && (current.task_type != 'Telephony')) {
+
+      gs.addErrorMessage('You need to put shipping information in the related list');
+
+
+  }
+ if ((schedulerecord == true) && (current.task_type != 'Telephony')) {
+
+     gs.addErrorMessage('You need to put Scheduled Appointments information in the related list');
+
+}
+
+
+
+
+
+
+
+  current.update();
+  action.setRedirectURL(current);]]></script>
+        <show_insert>false</show_insert>
+        <show_multiple_update>false</show_multiple_update>
+        <show_query>false</show_query>
+        <show_update>true</show_update>
+        <sys_class_name>sys_ui_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-04-07 13:39:39</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>3386ad018330ea10dbedb3a6feaad3b0</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Shipped</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="RBH customization" source="x_1610537_rbh_cust">054a89748373d610dbedb3a6feaad3d6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="RBH customization">054a89748373d610dbedb3a6feaad3d6</sys_scope>
+        <sys_update_name>sys_ui_action_3386ad018330ea10dbedb3a6feaad3b0</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-07 13:39:39</sys_updated_on>
+        <table/>
+        <ui11_compatible>true</ui11_compatible>
+        <ui16_compatible>false</ui16_compatible>
+    </sys_ui_action>
+</record_update>
