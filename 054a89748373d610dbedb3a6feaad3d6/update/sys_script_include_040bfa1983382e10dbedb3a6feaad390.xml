@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_1610537_rbh_cust.RBH_ReportUtilAjax</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>ce script include pour enlever la duplication des record dans des tableau qui contient des duplication pour qu'on laisse la derniere selon lors de l'insertion pour des besoin de reporting </description>
+        <mobile_callable>false</mobile_callable>
+        <name>RBH_ReportUtilAjax</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var RBH_ReportUtilAjax = Class.create();
+RBH_ReportUtilAjax.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+    incidentSla: function(filter, table) {
+        var unique = [];
+        var latestbreach = {};
+        var slaincident = new GlideRecord(table);
+        slaincident.addEncodedQuery(filter);
+        slaincident.orderByDesc('as_on');
+        slaincident.query();
+
+        while (slaincident.next()) {
+            var taskid = slaincident.task.toString();
+            var statusDate = slaincident.as_on;
+
+            if (!latestbreach[taskid] || statusDate > latestbreach[taskid].date) {
+                latestbreach[taskid] = {
+                    sys_id: slaincident.sys_id.toString(),
+                    date: statusDate
+                };
+            }
+        }
+
+        for (var slabreach in latestbreach) {
+            unique.push(latestbreach[slabreach].sys_id);
+        }
+
+        return unique;
+    },
+    type: 'RBH_ReportUtilAjax'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-04-08 14:28:00</sys_created_on>
+        <sys_id>040bfa1983382e10dbedb3a6feaad390</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>RBH_ReportUtilAjax</sys_name>
+        <sys_package display_value="RBH customization" source="x_1610537_rbh_cust">054a89748373d610dbedb3a6feaad3d6</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="RBH customization">054a89748373d610dbedb3a6feaad3d6</sys_scope>
+        <sys_update_name>sys_script_include_040bfa1983382e10dbedb3a6feaad390</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-08 14:28:00</sys_updated_on>
+    </sys_script_include>
+</record_update>
