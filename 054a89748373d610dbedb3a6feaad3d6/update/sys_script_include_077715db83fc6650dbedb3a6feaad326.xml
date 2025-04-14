@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_1610537_rbh_cust.IRM_UTILS</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>IRM_UTILS</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var IRM_UTILS = Class.create();
+IRM_UTILS.prototype = {
+    initialize: function() {
+    },
+	 createRecordFromSource: function(sourceRecord, targetTable, fieldMapping, infomsg) {
+        if (!sourceRecord || !targetTable || !fieldMapping) {
+            gs.addErrorMessage("Invalid parameters provided.");
+            return;
+        }
+
+        var targetRecord = new GlideRecord(targetTable);
+        targetRecord.initialize();
+
+        for (var sourceField in fieldMapping) {
+            if (sourceRecord.isValidField(sourceField)) {
+                targetRecord.setValue(fieldMapping[sourceField], sourceRecord.getValue(sourceField));
+            }
+        }
+
+        var newSysId = targetRecord.insert();
+        if (!newSysId) {
+            gs.addErrorMessage("Failed to create record in " + targetTable);
+            return;
+        }
+
+        var recordUrl = gs.getProperty('glide.servlet.uri') + targetTable + ".do?sys_id=" + newSysId;
+        var clickableLink = '<a href="' + recordUrl + '">' + targetRecord.getDisplayValue('number') + '</a>';
+
+        gs.addInfoMessage(gs.getMessage(infomsg) + clickableLink);
+        return newSysId;
+    },
+  mapStateStoryRemediation(story) {
+    var rmtask = new GlideRecord('sn_grc_task');
+    if (rmtask.get(story.original_task)) { 
+        var remdtask = (story.state == '3') ? '9' : '7'; // Map closed -> closed || canceled -> canceled
+        rmtask.setValue('state', remdtask); 
+        rmtask.update(); 
+    } else {
+        gs.error('Task not found for story: ' + story.original_task);
+    }
+},
+
+    type: 'IRM_UTILS'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-04-14 12:21:02</sys_created_on>
+        <sys_id>077715db83fc6650dbedb3a6feaad326</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>IRM_UTILS</sys_name>
+        <sys_package display_value="RBH customization" source="x_1610537_rbh_cust">054a89748373d610dbedb3a6feaad3d6</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="RBH customization">054a89748373d610dbedb3a6feaad3d6</sys_scope>
+        <sys_update_name>sys_script_include_077715db83fc6650dbedb3a6feaad326</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-14 12:21:12</sys_updated_on>
+    </sys_script_include>
+</record_update>
