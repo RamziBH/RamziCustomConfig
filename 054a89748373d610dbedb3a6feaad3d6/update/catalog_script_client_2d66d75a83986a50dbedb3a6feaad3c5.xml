@@ -7,7 +7,7 @@
         <applies_sc_task>false</applies_sc_task>
         <applies_target_record>false</applies_target_record>
         <applies_to>item</applies_to>
-        <cat_item display_value="Importer des lignes de dépense">ec955bd683986a50dbedb3a6feaad304</cat_item>
+        <cat_item display_value="Copy of Import Expense Lines">ec955bd683986a50dbedb3a6feaad304</cat_item>
         <cat_variable/>
         <condition/>
         <description/>

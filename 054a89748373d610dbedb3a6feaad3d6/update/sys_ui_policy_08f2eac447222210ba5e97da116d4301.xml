@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_policy">
+    <sys_ui_policy action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <conditions/>
+        <description/>
+        <global>true</global>
+        <inherit>false</inherit>
+        <isolate_script>true</isolate_script>
+        <model_id/>
+        <model_table/>
+        <on_load>true</on_load>
+        <order>100</order>
+        <reverse_if_false>true</reverse_if_false>
+        <run_scripts>true</run_scripts>
+        <script_false><![CDATA[function onCondition() {
+    for (var i = 1; i <= 5; i++) {
+        var field = 'cotl_task_parent.docking_' + i;
+        g_form.setDisplay(field, false);
+        g_form.setReadOnly(field, false);
+        g_form.setMandatory(field, false);
+    }
+}]]></script_false>
+        <script_true><![CDATA[function onCondition() {
+    var check = new GlideAjax('x_hccc_cotl.Hoc_CotlUtilsAjax');
+    check.addParam('sysparm_name', 'checkFieldValuedocking');
+    check.addParam('sysparm_parentfield', g_form.getValue('worksheet'));
+
+    check.getXMLAnswer(function(answer) {
+        var result = JSON.parse(answer || '{}');
+        var readonlyFields = result.readonly || [];
+        var editableFields = result.editable || [];
+
+        for (var i = 1; i <= 5; i++) {
+            g_form.setDisplay('docking_' + i, false);
+            g_form.setReadOnly('docking_' + i, false);
+            g_form.setMandatory('docking_' + i, false);
+
+            g_form.setDisplay('cotl_task_parent.docking_' + i, false);
+            g_form.setReadOnly('cotl_task_parent.docking_' + i, false);
+            g_form.setMandatory('cotl_task_parent.docking_' + i, false);
+        }
+
+        readonlyFields.forEach(function(fieldp) {
+            var val = g_form.getValue('cotl_task_parent.' + fieldp);
+            if (val) {
+                g_form.setDisplay('cotl_task_parent.' + fieldp, true);
+            }
+        });
+        readonlyFields.forEach(function(fieldchild) {
+            var val = g_form.getValue(fieldchild);
+            if (val) {
+                g_form.setDisplay(fieldchild, true);
+            }
+        });
+
+        editableFields.forEach(function(field) {
+            g_form.setDisplay(field, true);
+            g_form.setReadOnly(field, false);
+            g_form.setMandatory(field, true);
+        });
+    });
+}]]></script_true>
+        <set_values/>
+        <short_description>Hide/show Docking field Manual task</short_description>
+        <sys_class_name>sys_ui_policy</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-06-30 15:19:17</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>08f2eac447222210ba5e97da116d4301</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Hide/show Docking field Manual task</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="RBH customization" source="x_1610537_rbh_cust">054a89748373d610dbedb3a6feaad3d6</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="RBH customization">054a89748373d610dbedb3a6feaad3d6</sys_scope>
+        <sys_update_name>sys_ui_policy_08f2eac447222210ba5e97da116d4301</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-06-30 15:19:17</sys_updated_on>
+        <table/>
+        <ui_type>10</ui_type>
+        <view/>
+    </sys_ui_policy>
+</record_update>

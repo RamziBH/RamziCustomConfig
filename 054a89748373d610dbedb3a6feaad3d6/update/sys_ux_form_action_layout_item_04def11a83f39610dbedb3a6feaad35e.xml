@@ -2,6 +2,7 @@
     <sys_ux_form_action_layout_item action="INSERT_OR_UPDATE">
         <action display_value="Close">84def11a83f39610dbedb3a6feaad35a</action>
         <active>true</active>
+        <animate_icon>false</animate_icon>
         <color>secondary</color>
         <description/>
         <icon/>

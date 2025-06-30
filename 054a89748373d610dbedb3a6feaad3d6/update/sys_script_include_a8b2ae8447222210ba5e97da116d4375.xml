@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1610537_rbh_cust.Hoc_CotlUtilsAjax</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>Hoc_CotlUtilsAjax</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var Hoc_CotlUtilsAjax = Class.create();
+Hoc_CotlUtilsAjax.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+
+    checkcheckliststatut: function() {
+        result = true;
+        var uniqueid = this.getParameter('sysparm_uniqueid');
+        var ci = new GlideRecord('checklist_item');
+        ci.addQuery('checklist.document', uniqueid);
+        ci.addQuery('complete', false);
+        ci.query(); // 
+        if (ci.next()) {
+            gs.addErrorMessage('All checklist items must be completed before submission.');
+            result = false;
+        }
+
+        return result;
+
+    },
+
+    checktaskstatut: function() {
+        result = true;
+        var uniquesysid = this.getParameter('sysparm_uniquesysid');
+        var cotltask = new GlideRecord('x_hccc_cotl_task');
+        cotltask.addEncodedQuery('worksheet=' + uniquesysid + "^state!=3");
+        cotltask.query(); // 
+        if (cotltask.next()) {
+            result = false;
+        }
+
+        return result;
+
+    },
+
+    getparent: function() {
+        var requestedfor = this.getParameter('sysparm_requestedfor');
+        var user = new GlideRecord('sys_user');
+        user.get(requestedfor);
+        return user.x_hccc_base_pbdata_member_profile.caucus.parent;
+
+    },
+
+    checkFieldValue: function(tasktype) {
+        var parentId = this.getParameter('sysparm_parentfield');
+        var parent = new GlideRecord('x_hccc_cotl_worksheet');
+        if (!parent.get(parentId)) {
+            gs.info("Parent non trouvé");
+            return;
+        }
+
+        var howMuch = parseInt(parent.getValue('how_many_computers'), 10);
+        if (isNaN(howMuch)) {
+            gs.info("how_much_computer invalide");
+            return;
+        }
+
+        var cotlTask = new GlideRecord('x_hccc_cotl_task');
+        cotlTask.addQuery('worksheet', parentId);
+        cotlTask.addQuery('task_type', 'computer');
+        cotlTask.query();
+
+        var filledFields = [];
+
+        while (cotlTask.next()) {
+            for (var i = 1; i <= howMuch; i++) {
+                var fieldName = 'computer_' + i;
+                var val = cotlTask.getValue(fieldName);
+                if (val) {
+                    filledFields.push(fieldName);
+                }
+            }
+        }
+        var toShow = [];
+        for (var j = 1; j <= howMuch; j++) {
+            var field = 'computer_' + j;
+            if (filledFields.indexOf(field) === -1) {
+                toShow.push(field);
+            }
+        }
+        // gs.addErrorMessage("Champs computer à afficher : " + toShow.join(', '));
+        // gs.addErrorMessage('champs readonly' + filledFields);
+        // gs.addErrorMessage('champs editable' + toShow);
+
+
+        return JSON.stringify({
+            readonly: filledFields,
+            editable: toShow
+        });
+    },
+
+	checkFieldValuedocking: function(tasktype) {
+        var parentId = this.getParameter('sysparm_parentfield');
+        var parent = new GlideRecord('x_hccc_cotl_worksheet');
+        if (!parent.get(parentId)) {
+            gs.info("Parent non trouvé");
+            return;
+        }
+
+        var howMuch = parseInt(parent.getValue('how_many_docking_monitors_are_requested_for_this_site'), 10);
+        if (isNaN(howMuch)) {
+            gs.info("how_many_docking_monitors_are_requested_for_this_site invalide");
+            return;
+        }
+
+        var cotlTask = new GlideRecord('x_hccc_cotl_task');
+        cotlTask.addQuery('worksheet', parentId);
+        cotlTask.addQuery('task_type', 'computer');
+        cotlTask.query();
+
+        var filledFields = [];
+
+        while (cotlTask.next()) {
+            for (var i = 1; i <= howMuch; i++) {
+                var fieldName = 'docking_' + i;
+                var val = cotlTask.getValue(fieldName);
+                if (val) {
+                    filledFields.push(fieldName);
+                }
+            }
+        }
+        var toShow = [];
+        for (var j = 1; j <= howMuch; j++) {
+            var field = 'docking_' + j;
+            if (filledFields.indexOf(field) === -1) {
+                toShow.push(field);
+            }
+        }
+        // gs.addErrorMessage("Champs docking à afficher : " + toShow.join(', '));
+        // gs.addErrorMessage('champs docking readonly' + filledFields);
+        // gs.addErrorMessage('champs docking  editable' + toShow);
+
+
+        return JSON.stringify({
+            readonly: filledFields,
+            editable: toShow
+        });
+    },
+
+    type: 'Hoc_CotlUtilsAjax'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-06-30 15:18:07</sys_created_on>
+        <sys_id>a8b2ae8447222210ba5e97da116d4375</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Hoc_CotlUtilsAjax</sys_name>
+        <sys_package display_value="RBH customization" source="x_1610537_rbh_cust">054a89748373d610dbedb3a6feaad3d6</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="RBH customization">054a89748373d610dbedb3a6feaad3d6</sys_scope>
+        <sys_update_name>sys_script_include_a8b2ae8447222210ba5e97da116d4375</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-06-30 15:18:07</sys_updated_on>
+    </sys_script_include>
+</record_update>

@@ -2,7 +2,7 @@
     <item_option_new action="INSERT_OR_UPDATE">
         <active>true</active>
         <attributes/>
-        <cat_item display_value="Importer des lignes de dépense">ec955bd683986a50dbedb3a6feaad304</cat_item>
+        <cat_item display_value="Copy of Import Expense Lines">ec955bd683986a50dbedb3a6feaad304</cat_item>
         <category/>
         <choice_direction>down</choice_direction>
         <choice_field/>
